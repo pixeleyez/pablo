@@ -1,11 +1,9 @@
-import React, { useState, useCallback } from "react";
-import { MessageCircle, X as Close, ChevronDownIcon } from "lucide-react";
+import React, { useState } from "react";
+import { ChevronDownIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { motion } from "framer-motion";
-import clsx from "clsx";
 import { Link } from "react-router-dom";
 
 interface Destination {
