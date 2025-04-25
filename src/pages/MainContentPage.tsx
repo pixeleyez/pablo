@@ -37,16 +37,6 @@ interface Message {
   text: string;
 }
 
-interface Profile {
-  name: string;
-  likes: string[];
-}
-
-interface OnboardingProps {
-  open: boolean;
-  onDone: (profile: Profile) => void;
-}
-
 interface DestinationCardProps {
   stay: Stay;
 }
@@ -163,20 +153,8 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ msg }) => (
 // Main component
 // -----------------------------------------------------------------------------
 export default function MainContentPage() {
-  // persistence helpers
-  const loadProfile = (): Profile | null => {
-    if (typeof window === "undefined") return null;
-    try {
-      const raw = localStorage.getItem("pablo:v1:profile");
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
-  };
-  const saveProfile = (p: Profile) => localStorage.setItem("pablo:v1:profile", JSON.stringify(p));
-
+  
   // state
-  const [profile, setProfile] = useState<Profile | null>(loadProfile());
   const [draft, setDraft] = useState("");
   const [messages, setMessages] = useState<Message[]>([{ from: "pablo", text: "Hi! I'm Pablo – where to?" }]);
   const [dest, setDest] = useState<keyof typeof DESTINATIONS>("Tulum");
