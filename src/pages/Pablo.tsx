@@ -1,8 +1,12 @@
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { MessageCircle, X as Close, ChevronDownIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { motion } from "framer-motion";
+import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 interface Destination {
   image: string;
@@ -45,6 +49,70 @@ const destinations: Destinations = {
 interface Message {
   from: "pablo" | "user";
   text: string;
+}
+
+/* Dashboard Menu Component */
+function DashboardMenu() {
+  const [open, setOpen] = useState(false);
+
+  const toggle = () => setOpen(!open);
+
+  return (
+    <div className="relative inline-block text-left">
+      {/* trigger */}
+      <button
+        onClick={toggle}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+        className="flex items-center gap-1 rounded-xl bg-purple-700 px-4 py-2 font-medium text-white
+                   shadow-lg hover:bg-purple-800 focus:outline-none m-0"
+      >
+        Dashboard <ChevronDownIcon size={18} />
+      </button>
+
+      {/* dropdown panel */}
+      {open && (
+        <div
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
+          className="absolute z-50 w-56 origin-top-left rounded-xl border border-gray-200
+                     bg-white p-2 shadow-xl mt-0"
+        >
+          <MenuLink to="/search">🔍 Search accommodation</MenuLink>
+          <MenuLink to="/inbox">📨 Inbox</MenuLink>
+          <MenuLink to="/canvas">🖼️ Canvas / Wall</MenuLink>
+          <MenuLink to="/editorials">📰 Editorials</MenuLink>
+
+          <hr className="my-2" />
+
+          <details>
+            <summary className="cursor-pointer rounded-lg px-2 py-1 text-sm font-semibold hover:bg-gray-50">
+              👤 Profile &amp; Account
+            </summary>
+            <div className="ml-4 mt-1 flex flex-col gap-1">
+              <MenuLink to="/profile">View profile</MenuLink>
+              <MenuLink to="/quiz">Quiz &amp; preferences</MenuLink>
+              <MenuLink to="/editor-signup">Become an editor</MenuLink>
+              <MenuLink to="/reviews">Imported reviews</MenuLink>
+              <MenuLink to="/account">Account settings</MenuLink>
+            </div>
+          </details>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* tiny helper for consistent styling */
+function MenuLink({ to, children }: { to: string; children: React.ReactNode }) {
+  return (
+    <Link
+      to={to}
+      className="block rounded-lg px-2 py-1 text-sm hover:bg-gray-100 focus:bg-gray-100"
+    >
+      {children}
+    </Link>
+  );
 }
 
 export default function PabloMVPChat() {
@@ -138,6 +206,7 @@ export default function PabloMVPChat() {
             className="w-10 h-10 rounded-full object-cover" 
           />
           <h2 className="text-xl font-bold">Pablo</h2>
+          <DashboardMenu />
         </div>
         <ScrollArea className="flex-1 overflow-y-auto border p-4 rounded-xl bg-gray-50">
           {messages.map((msg, i) => (
