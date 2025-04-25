@@ -80,6 +80,7 @@ function DashboardMenu() {
           <MenuLink to="/inbox">📨 Inbox</MenuLink>
           <MenuLink to="/canvas">🖼️ Canvas / Wall</MenuLink>
           <MenuLink to="/editorials">📰 Editorials</MenuLink>
+          <MenuLink to="/oka">📝 Oka Editorials</MenuLink>
 
           <hr className="my-2" />
 
