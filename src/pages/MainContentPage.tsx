@@ -99,6 +99,20 @@ const DESTINATIONS: Record<string, Destination> = {
     })),
     themeColor: "#f6f4f1",
   },
+  Madrid: {
+    stays: Array.from({ length: 6 }, (_, i) => ({
+      image: `https://images.pexels.com/photos/${i === 0 ? '2901209' : i === 1 ? '2901210' : i === 2 ? '2901211' : i === 3 ? '2901212' : i === 4 ? '2901213' : '2901214'}/pexels-photo-${i === 0 ? '2901209' : i === 1 ? '2901210' : i === 2 ? '2901211' : i === 3 ? '2901212' : i === 4 ? '2901213' : '2901214'}.jpeg?auto=compress&cs=tinysrgb&w=600&h=400`,
+      title: `Alfama Loft ${i + 1}`,
+      description: "River view • Tram 28 nearby",
+    })),
+    activities: ["Tapas crawl", "Prado Museum", "Flamenco show"],
+    editorial: ["Madrid with kids", "Hidden Madrid", "Foodie guide"],
+    influencers: Array.from({ length: 6 }, (_, i) => ({
+      image: `https://images.pexels.com/photos/${i === 0 ? '415835' : i === 1 ? '415836' : i === 2 ? '415837' : i === 3 ? '415838' : i === 4 ? '415839' : '415840'}/pexels-photo-${i === 0 ? '415835' : i === 1 ? '415836' : i === 2 ? '415837' : i === 3 ? '415838' : i === 4 ? '415839' : '415840'}.jpeg?auto=compress&cs=tinysrgb&w=200&h=200`,
+      handle: `@madridlife${i + 1}`,
+    })),
+    themeColor: "#faf7f5",
+  },
 };
 
 // -----------------------------------------------------------------------------
@@ -163,25 +177,90 @@ export default function MainContentPage() {
 
   const pushMsg = useCallback((m: Message) => setMessages((all) => [...all, m]), []);
 
-  const botReply = useCallback(
-    (input: string) => {
-      const target = Object.keys(DESTINATIONS).find((k) => input.toLowerCase().includes(k.toLowerCase()));
+  const handleSend = () => {
+    const text = draft.trim();
+    if (!text) return;
+    
+    // Find the target destination from the input
+    const target = Object.keys(DESTINATIONS).find((k) => text.toLowerCase().includes(k.toLowerCase()));
+    
+    if (target) {
+      // Update stays with new images based on destination
+      const newStays = Array.from({ length: 6 }, (_, i) => {
+        // Different photo IDs for each destination
+        const photoIds = {
+          Tokyo: ['338504', '338515', '338516', '338517', '338518', '338519'],
+          Madrid: ['2901209', '2901210', '2901211', '2901212', '2901213', '2901214'],
+          Tulum: ['338504', '338515', '338516', '338517', '338518', '338519'],
+          Lisbon: ['2901209', '2901210', '2901211', '2901212', '2901213', '2901214']
+        };
+
+        return {
+          image: `https://images.pexels.com/photos/${photoIds[target as keyof typeof photoIds][i]}/pexels-photo-${photoIds[target as keyof typeof photoIds][i]}.jpeg?auto=compress&cs=tinysrgb&w=600&h=400`,
+          title: `Beach Villa ${i + 1}`,
+          description: target === "Tulum" ? "Private pool • Bikes included" : 
+                      target === "Lisbon" ? "River view • Tram 28 nearby" : 
+                      target === "Tokyo" ? "Near station • 3 guests" :
+                      "Near Retiro • 2 guests",
+        };
+      });
+      
+      // Update influencers with new images based on destination
+      const newInfluencers = Array.from({ length: 6 }, (_, i) => {
+        // Different photo IDs for influencer profiles
+        const influencerPhotoIds = {
+          Tokyo: ['415829', '415830', '415831', '415832', '415833', '415834'],
+          Madrid: ['415835', '415836', '415837', '415838', '415839', '415840'],
+          Tulum: ['415829', '415830', '415831', '415832', '415833', '415834'],
+          Lisbon: ['415835', '415836', '415837', '415838', '415839', '415840']
+        };
+
+        return {
+          image: `https://images.pexels.com/photos/${influencerPhotoIds[target as keyof typeof influencerPhotoIds][i]}/pexels-photo-${influencerPhotoIds[target as keyof typeof influencerPhotoIds][i]}.jpeg?auto=compress&cs=tinysrgb&w=200&h=200`,
+          handle: `@${target.toLowerCase()}life${i + 1}`,
+        };
+      });
+
+      // Update activities and editorial based on destination
+      const activities = {
+        Tokyo: ["Sushi making", "Robot restaurant", "Temple tour"],
+        Madrid: ["Tapas crawl", "Prado Museum", "Flamenco show"],
+        Tulum: ["Cenote snorkelling", "Sunrise yoga", "Taco crawl"],
+        Lisbon: ["Fado night", "Pastel de nata workshop", "Historic tram ride"]
+      };
+
+      const editorial = {
+        Tokyo: ["Tokyo on a budget", "Hidden gems", "Nightlife guide"],
+        Madrid: ["Madrid with kids", "Hidden Madrid", "Foodie guide"],
+        Tulum: ["Family guide to Tulum", "Digital‑nomad beach clubs", "Eco‑friendly retreats"],
+        Lisbon: ["Hidden Lisbon", "Lisbon with kids", "Fado & food"]
+      };
+
+      // Update the destination data
+      DESTINATIONS[target] = {
+        ...DESTINATIONS[target],
+        stays: newStays,
+        activities: activities[target as keyof typeof activities],
+        editorial: editorial[target as keyof typeof editorial],
+        influencers: newInfluencers,
+      };
+
+      // Update the destination state
+      setDest(target as keyof typeof DESTINATIONS);
+    }
+
+    // Add user message and clear input
+    pushMsg({ from: "user", text });
+    setDraft("");
+    
+    // Bot reply after a short delay
+    setTimeout(() => {
       if (target) {
-        setDest(target as keyof typeof DESTINATIONS);
         pushMsg({ from: "pablo", text: `Great choice – planning ${target} for you now!` });
       } else {
         pushMsg({ from: "pablo", text: "Tell me a city and I'll switch things up." });
       }
-    },
-    [pushMsg]
-  );
-
-  const handleSend = () => {
-    const text = draft.trim();
-    if (!text) return;
-    pushMsg({ from: "user", text });
-    setDraft("");
-    setTimeout(() => botReply(text), 600);
+    }, 600);
   };
 
   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -216,7 +295,7 @@ export default function MainContentPage() {
           <div className="mb-6 flex gap-2">
             <Input
               value={draft}
-              placeholder="Ask Pablo – try 'Lisbon with kids'"
+              placeholder="Ask Pablo – try 'Lisbon with Tulum'"
               onChange={(e) => setDraft(e.target.value)}
               onKeyUp={handleKey}
               aria-label="Ask Pablo"
