@@ -581,7 +581,30 @@ const PabloTypingIndicator = () => (
   </motion.div>
 );
 
-// Add PaymentNotification Component
+// Update the ProcessingNotification for better visibility
+const ProcessingNotification = ({ show }: { show: boolean }) => (
+  <AnimatePresence>
+    {show && (
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -50 }}
+        transition={{ duration: 0.2 }}
+        className="fixed top-24 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-xl border border-blue-100 p-4 flex items-center gap-3 z-[100]"
+      >
+        <div className="text-blue-500">
+          <CreditCard className="w-8 h-7" />
+        </div>
+        <div>
+          <p className="text-gray-700 font-medium">Processing payment...</p>
+          <p className="text-sm text-gray-500">Amount: $870.00</p>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
+// Update the PaymentNotification for better visibility
 const PaymentNotification = ({ show }: { show: boolean }) => (
   <AnimatePresence>
     {show && (
@@ -589,7 +612,8 @@ const PaymentNotification = ({ show }: { show: boolean }) => (
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -50 }}
-        className="fixed top-24 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-xl border border-blue-100 p-6 z-50 w-[400px]"
+        transition={{ duration: 0.2 }}
+        className="fixed top-24 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-xl border border-blue-100 p-6 z-[100] w-[400px]"
       >
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0">
@@ -628,28 +652,6 @@ const PaymentNotification = ({ show }: { show: boolean }) => (
   </AnimatePresence>
 );
 
-// Update the original Notification for processing state
-const ProcessingNotification = ({ show }: { show: boolean }) => (
-  <AnimatePresence>
-    {show && (
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -50 }}
-        className="fixed top-24 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-xl border border-blue-100 p-4 flex items-center gap-3 z-50"
-      >
-        <div className="text-blue-500">
-          <CreditCard className="w-8 h-7" />
-        </div>
-        <div>
-          <p className="text-gray-700 font-medium">Processing payment...</p>
-          <p className="text-sm text-gray-500">Amount: $870.00</p>
-        </div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-);
-
 /**************** SCRIPT ****************/
 const SCRIPT: { from: "pablo" | "user"; text: string; eff?: (s: DemoState) => DemoState }[] = [
   {
@@ -670,6 +672,11 @@ const SCRIPT: { from: "pablo" | "user"; text: string; eff?: (s: DemoState) => De
     eff: (s) => ({ ...s, compare: true }),
   },
   { from: "user", text: "no flights yet, are dates flexible? Book 2nd option for now, need flexibility w/ dates/cancel; also, need activities w/kids" },
+  {
+    from: "pablo",
+    text: "Okay! ",
+    eff: (s) => ({ ...s, iti: true }),
+  },
   {
     from: "pablo",
     text: "Booking = done! Give me a few minutes to amaze you – sending confirmation email. Day 1: Traffic could be heavier on Friday, plan extra 20‑30 min to get to UWS. Check‑in at 3 pm but you can leave luggage with the doorman; walk 3 min to INCREDIBLE place 'Family Kitchen' toward Broadway, known for GF pizza; sunny & warm forecast – best friend = Central Park playground right after. Remember the scavenger hunt I made at the local park? I've created a special Central Park version! It takes you past Belvedere Castle (Gracie can pretend she's a princess again), the Alice in Wonderland statue (perfect for those family photos Olga loves), and the zoo (they've got new red pandas!). Then walk to Columbus Circle; Wholefoods downstairs to stock the fridge. Dinner – finger‑food lounge 'Mo Lounge' with the best Central Park view, known for cocktails!",
@@ -747,13 +754,17 @@ export default function PabloDemoLoop() {
         setIsTypingMessage(true);
         
         // Show notifications based on message content
-        if (step.text.includes("Booking = done!")) {
+        if (step.text.startsWith("Booking = done!")) {
+          // First show payment processing
           setShowPaymentProcessed(true);
-          setTimeout(() => setShowPaymentProcessed(false), 3000);
           setTimeout(() => {
-            setShowBookingConfirmed(true);
-            setTimeout(() => setShowBookingConfirmed(false), 3000);
-          }, 1500);
+            setShowPaymentProcessed(false);
+            // Then show booking confirmation
+            setTimeout(() => {
+              setShowBookingConfirmed(true);
+              setTimeout(() => setShowBookingConfirmed(false), 4000);
+            }, 500);
+          }, 2000);
         }
 
         // Apply state effects with loading
@@ -860,6 +871,18 @@ export default function PabloDemoLoop() {
     window.scrollTo(0, 0);
   }, [state.location]);
 
+  // Add test function
+  const testNotifications = () => {
+    setShowPaymentProcessed(true);
+    setTimeout(() => {
+      setShowPaymentProcessed(false);
+      setTimeout(() => {
+        setShowBookingConfirmed(true);
+        setTimeout(() => setShowBookingConfirmed(false), 4000);
+      }, 500);
+    }, 2000);
+  };
+
   /*************** RENDER ***************/
   return (
     <motion.div
@@ -869,7 +892,7 @@ export default function PabloDemoLoop() {
     >
       <DashboardMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
-      {/* Replace old notifications with new ones */}
+      {/* Add Notifications */}
       <ProcessingNotification show={showPaymentProcessed} />
       <PaymentNotification show={showBookingConfirmed} />
       
@@ -902,6 +925,15 @@ export default function PabloDemoLoop() {
           </div>
           
           <div className="flex items-center gap-4">
+            {/* Add test button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={testNotifications}
+              className="mr-2"
+            >
+              Test Notifications
+            </Button>
             <Badge variant="outline" className="text-sm">
               {state.location === "new-york" ? "📍 New York" : "🌎 Featured Destinations"}
             </Badge>
