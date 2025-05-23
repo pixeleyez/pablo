@@ -505,6 +505,8 @@ const TypeBubble = ({
   speed?: number;
 }) => {
   const [txt, setTxt] = useState("");
+  const [isHighlighted, setIsHighlighted] = useState(false);
+  const bubbleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!shouldType) {
@@ -533,24 +535,41 @@ const TypeBubble = ({
     return () => clearInterval(iv);
   }, [msg.text, onDone, shouldType, speed, msg.from]);
 
+  const handleClick = () => {
+    setIsHighlighted(true);
+    bubbleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => setIsHighlighted(false), 1500);
+  };
+
   return (
     <motion.div
+      ref={bubbleRef}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       className={`mb-6 flex items-end gap-3 ${msg.from === "pablo" ? "" : "flex-row-reverse"}`}
+      onClick={handleClick}
     >
       {msg.from === "pablo" ? (
         <div className="size-12 rounded-full overflow-hidden flex-shrink-0 bg-[#F5F1ED]">
-          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center"><span className="text-lg">🤖</span></div>
+          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+            <span className="text-lg">🤖</span>
+          </div>
         </div>
       ) : (
         <UserAvatar className="w-8 h-8" />
       )}
       <div
-        className={`relative max-w-[80%] rounded-[15px] px-4 py-3 text-[15px] ${msg.from === "pablo"
-            ? " bg-[#f5f1ed] text-[#2D2D2D] rounded-bl-none shadow-sm"
+        className={`relative max-w-[80%] rounded-[15px] px-4 py-3 text-[15px] cursor-pointer transition-all duration-300 ${
+          msg.from === "pablo"
+            ? "bg-[#f5f1ed] text-[#2D2D2D] rounded-bl-none shadow-sm"
             : "bg-[#4B4B4B] text-white rounded-br-none"
-          }`}
+        } ${
+          isHighlighted 
+            ? msg.from === "pablo" 
+              ? "ring-2 ring-[#7e6441] ring-opacity-50" 
+              : "ring-2 ring-[#4B4B4B] ring-opacity-50"
+            : ""
+        }`}
       >
         {txt || "\u00A0"}
       </div>
