@@ -3,6 +3,7 @@ import MainContentPage from './pages/MainContentPage'
 import Pablo from './pages/Pablo'
 import Canvas from './pages/Canvas'
 import Canvas2 from './pages/Canvas-2'
+import Canvas3 from './pages/canvas-3'
 import Oka from './pages/Oka'
 
 import './App.css'
@@ -16,6 +17,7 @@ function App() {
         <Route path="oka" element={<Oka />} />
         <Route path="Canvas" element={<Canvas />} />
         <Route path="Canvas2" element={<Canvas2 />} />
+        <Route path="Canvas3" element={<Canvas3 />} />
       </Routes>
     </Router>
   )
