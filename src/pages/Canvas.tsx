@@ -909,6 +909,33 @@ export default function PabloDemoLoop() {
     }, 2000);
   };
 
+  // Update the useEffect for scrolling
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (scrollRef.current) {
+        const scrollContainer = scrollRef.current.closest('[data-radix-scroll-area-viewport].h-full.w-full');
+        if (scrollContainer) {
+          scrollContainer.scrollTop = scrollContainer.scrollHeight;
+        }
+      }
+    };
+
+    // Initial scroll
+    scrollToBottom();
+
+    // Set up an interval to keep scrolling while typing
+    let scrollInterval: number | null = null;
+    if (typing || isTypingMessage) {
+      scrollInterval = setInterval(scrollToBottom, 100);
+    }
+
+    return () => {
+      if (scrollInterval) {
+        clearInterval(scrollInterval);
+      }
+    };
+  }, [msgs, typing, isTypingMessage]);
+
   /*************** RENDER ***************/
   return (
     <motion.div
@@ -1097,21 +1124,23 @@ export default function PabloDemoLoop() {
               </div>
             </div>
 
-            <ScrollArea className="flex-1 p-4 h-[calc(100%-200px)] text-start">
-              <div className="space-y-1">
-                {msgs.map((m, i) => (
-                  <TypeBubble
-                    key={i}
-                    msg={m}
-                    shouldType={i === msgs.length - 1 && isTypingMessage}
-                    onDone={i === msgs.length - 1 ? handleMessageTyped : () => { }}
-                    speed={playbackSpeed}
-                  />
-                ))}
-                <AnimatePresence>{typing && <PabloTypingIndicator key="typing" />}</AnimatePresence>
-                <div ref={scrollRef} />
-              </div>
-            </ScrollArea>
+            <div className="relative flex flex-col h-[calc(100%-200px)]">
+              <ScrollArea className="flex-1 p-4 h-[calc(100%-200px)] text-start">
+                <div className="space-y-1" id="scroll-area-viewport">
+                  {msgs.map((m, i) => (
+                    <TypeBubble
+                      key={i}
+                      msg={m}
+                      shouldType={i === msgs.length - 1 && isTypingMessage}
+                      onDone={i === msgs.length - 1 ? handleMessageTyped : () => { }}
+                      speed={playbackSpeed}
+                    />
+                  ))}
+                  <AnimatePresence>{typing && <PabloTypingIndicator key="typing" />}</AnimatePresence>
+                  <div ref={scrollRef} className="h-1" />
+                </div>
+              </ScrollArea>
+            </div>
 
             <div className="p-4 border-t bg-gray-50">
               <Button
