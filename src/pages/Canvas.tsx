@@ -250,7 +250,7 @@ const DashboardMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
             <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl">
               <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center">
-                <User className="w-6 h-6 text-blue-700" />
+                <User className="w-6 h-6 text-[#7e6441]" />
               </div>
               <div>
                 <p className="font-medium">Slavik K.</p>
@@ -295,7 +295,7 @@ const MenuItem = ({ icon, label, badge }: { icon: React.ReactNode; label: string
       <span className="font-medium text-gray-800">{label}</span>
     </div>
     {badge && (
-      <Badge variant="secondary" className="bg-blue-100 text-blue-700">
+      <Badge variant="secondary" className=" bg-[#f5f1ed] text-[#7e6441]">
         {badge}
       </Badge>
     )}
@@ -392,7 +392,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
           <div className="p-5 space-y-4">
             <div>
               <div className="flex items-start justify-between">
-                <h3 className="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-lg font-semibold text-gray-800 group-hover:text-[#7e6441] transition-colors">
                   {p.title}
                 </h3>
                 <div className="flex items-center gap-1 text-sm">
@@ -416,7 +416,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
 
             <div className="flex items-center justify-between pt-2 border-t">
               <p className="text-xl font-semibold text-gray-800">{p.price}</p>
-              <Button variant="ghost" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
+              <Button variant="ghost" className="text-[#7e6441] hover:text-[#f5f1ed] hover:bg-[#7e6441]">
                 View Details
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
@@ -433,7 +433,7 @@ const InfluencerCard = ({ influencer }: { influencer: Influencer }) => (
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
     whileHover={{ y: -2 }}
-    className="bg-gradient-to-br from-blue-50 to-white p-5 rounded-2xl shadow-md hover:shadow-xl transition-all"
+    className="bg-white p-5 rounded-2xl shadow-md hover:shadow-xl transition-all"
   >
     <div className="flex items-start gap-4">
       <img
@@ -443,8 +443,8 @@ const InfluencerCard = ({ influencer }: { influencer: Influencer }) => (
       />
       <div className="flex-1">
         <div className="flex items-center gap-2">
-          <h4 className="font-semibold text-gray-800">{influencer.name}</h4>
-          <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-700">
+          <h4 className="font-semibold text-[#7e6441]">{influencer.name}</h4>
+          <Badge variant="secondary" className="text-xs bg-[#f5f1ed] text-[#7e6441]">
             <TrendingUp className="w-3 h-3 mr-1" />
             Insider
           </Badge>
@@ -468,7 +468,7 @@ const ArticleCard = ({ article }: { article: Article }) => (
         className="w-full h-full object-cover"
       />
       {article.trending && (
-        <Badge className="absolute top-3 left-3 bg-blue-600 text-white border-0">
+        <Badge className="absolute top-3 left-3  bg-[#7e6441] text-white border-0">
           <TrendingUp className="w-3 h-3 mr-1" />
           Trending
         </Badge>
@@ -486,9 +486,9 @@ const ArticleCard = ({ article }: { article: Article }) => (
 
 // Add UserAvatar component
 const UserAvatar = ({ className = "" }: { className?: string }) => (
-  <div className={`rounded-full overflow-hidden flex-shrink-0 ${className} bg-sky-100 text-sky-500`}>
+  <div className={`rounded-full overflow-hidden flex-shrink-0 ${className} bg-[#8B8378] text-white`}>
     <div className="w-full h-full flex items-center justify-center text-sm font-medium">
-      SK
+      T
     </div>
   </div>
 );
@@ -537,21 +537,19 @@ const TypeBubble = ({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`mb-4 flex items-end gap-3 ${msg.from === "pablo" ? "" : "flex-row-reverse"}`}
+      className={`mb-6 flex items-end gap-3 ${msg.from === "pablo" ? "" : "flex-row-reverse"}`}
     >
       {msg.from === "pablo" ? (
-        <div className="size-12 rounded-full overflow-hidden flex-shrink-0 bg-amber-100">
-          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-            <span className="text-lg">🤖</span>
-          </div>
+        <div className="size-12 rounded-full overflow-hidden flex-shrink-0 bg-[#F5F1ED]">
+          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center"><span className="text-lg">🤖</span></div>
         </div>
       ) : (
         <UserAvatar className="w-8 h-8" />
       )}
       <div
         className={`relative max-w-[80%] rounded-[15px] px-4 py-3 text-[15px] ${msg.from === "pablo"
-            ? "bg-blue-50 text-slate-800 rounded-bl-none"
-            : "bg-slate-600 text-white rounded-br-none"
+            ? " bg-[#f5f1ed] text-[#2D2D2D] rounded-bl-none shadow-sm"
+            : "bg-[#4B4B4B] text-white rounded-br-none"
           }`}
       >
         {txt || "\u00A0"}
@@ -568,22 +566,22 @@ const PabloTypingIndicator = () => (
     className="mb-6 flex items-start gap-3"
   >
     <div className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-3 shadow-sm">
-      <span className="text-sm text-gray-600">Pablo is thinking</span>
+      <span className="text-[#666666]">Pablo is thinking</span>
       <div className="flex gap-1">
         <motion.div
           animate={{ y: [0, -3, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-          className="w-1.5 h-1.5 bg-gray-400 rounded-full"
+          className="w-1.5 h-1.5 bg-[#666666] rounded-full"
         />
         <motion.div
           animate={{ y: [0, -3, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-          className="w-1.5 h-1.5 bg-gray-400 rounded-full"
+          className="w-1.5 h-1.5 bg-[#666666] rounded-full"
         />
         <motion.div
           animate={{ y: [0, -3, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-          className="w-1.5 h-1.5 bg-gray-400 rounded-full"
+          className="w-1.5 h-1.5 bg-[#666666] rounded-full"
         />
       </div>
     </div>
@@ -601,7 +599,7 @@ const ProcessingNotification = ({ show }: { show: boolean }) => (
         transition={{ duration: 0.2 }}
         className="fixed top-24 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-xl border border-blue-100 p-4 flex items-center gap-3 z-[100]"
       >
-        <div className="text-blue-500">
+        <div className="text-[#7e6441]">
           <CreditCard className="w-8 h-7" />
         </div>
         <div>
@@ -648,7 +646,7 @@ const PaymentNotification = ({ show }: { show: boolean }) => (
                 <span>Broadway Gem</span>
               </div>
               <div className="mt-3 pt-3 border-t border-gray-100">
-                <div className="flex items-center gap-2 text-blue-600">
+                <div className="flex items-center gap-2 text-[#7e6441]">
                   <CheckCircle2 className="w-5 h-5" />
                   <span className="font-medium">Confirmation email sent!</span>
                 </div>
@@ -897,7 +895,7 @@ export default function PabloDemoLoop() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="min-h-screen bg-gray-100"
+      className="min-h-screen bg-[#F5F1ED]"
     >
       <DashboardMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
@@ -913,7 +911,7 @@ export default function PabloDemoLoop() {
               variant="ghost"
               size="icon"
               onClick={() => setMenuOpen(true)}
-              className="hover:bg-blue-50 -ml-3"
+              className="hover:bg-[#7e6441] -ml-3"
             >
               <Menu className="w-5 h-5" />
             </Button>
@@ -957,7 +955,7 @@ export default function PabloDemoLoop() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="relative rounded-3xl overflow-hidden h-64 bg-gradient-to-br from-blue-600 to-blue-800"
+            className="relative rounded-3xl overflow-hidden h-64 bg-[#7e6441]"
           >
             <div className="absolute inset-0 bg-black/20" />
             <div className="relative h-full flex items-center justify-center text-white p-8 text-center">
@@ -1006,9 +1004,9 @@ export default function PabloDemoLoop() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 shadow-lg"
+                className=" bg-white rounded-2xl p-8 shadow-lg"
               >
-                <h3 className="text-2xl font-semibold mb-6 text-blue-900">Day 1 – Arrival & Park Fun</h3>
+                <h3 className="text-2xl font-semibold mb-6 text-gray-900">Day 1 – Arrival & Park Fun</h3>
                 <div className="space-y-3">
                   {[
                     "Extra 20‑30 min for Friday traffic",
@@ -1025,8 +1023,8 @@ export default function PabloDemoLoop() {
                       transition={{ delay: i * 0.1 }}
                       className="flex items-start gap-3"
                     >
-                      <div className="w-6 h-6 rounded-full bg-blue-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-xs font-semibold text-blue-700">{i + 1}</span>
+                      <div className="w-6 h-6 rounded-full  bg-[#f5f1ed] flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-xs font-semibold text-[#7e6441]">{i + 1}</span>
                       </div>
                       <p className="text-gray-700">{item}</p>
                     </motion.div>
@@ -1068,7 +1066,7 @@ export default function PabloDemoLoop() {
         {/* CHAT COLUMN */}
         <aside className="lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
           <Card className="h-full shadow-xl rounded-2xl overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4">
+            <div className="bg-[#7e6441] text-white p-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                   <span className="text-lg">🤖</span>
