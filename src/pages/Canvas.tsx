@@ -11,7 +11,8 @@ import {
   Play, Pause, Volume2, VolumeX, MapPin, Wifi, Coffee, 
   Dumbbell, Car, Baby, Gamepad2, Menu, X, MessageSquare,
   Inbox, Image as ImageIcon, User, Edit, Star, Heart,
-  Bookmark, TrendingUp, Calendar, ChevronRight
+  Bookmark, TrendingUp, Calendar, ChevronRight, CreditCard,
+  CheckCircle2
 } from "lucide-react";
 
 const DemoControls = ({ 
@@ -44,7 +45,7 @@ const DemoControls = ({
       size="sm" 
       variant="ghost" 
       onClick={onPlayPause}
-      className="hover:bg-purple-50"
+      className="hover:bg-blue-50"
     >
       {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
     </Button>
@@ -76,7 +77,7 @@ const DemoControls = ({
       size="sm"
       variant="ghost"
       onClick={onSoundToggle}
-      className="hover:bg-purple-50"
+      className="hover:bg-blue-50"
     >
       {soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
     </Button>
@@ -129,7 +130,11 @@ const PROPS: Record<string, Property> = {
     title: "4‑BDR UWS Apt – Gaming Corner",
     price: "$789/night",
     desc: "Park‑view master, same gaming setup kids loved in Palm Beach.",
-    images: ["/apt1.jpg", "/apt1-2.jpg", "/apt1-3.jpg"],
+    images: [
+      "/images/apt1-living.jpg",
+      "/images/apt1-gaming.jpg",
+      "/images/apt1-master.jpg"
+    ],
     amenities: [
       { id: "wifi", icon: <Wifi className="w-4 h-4" />, name: "High-Speed WiFi" },
       { id: "gaming", icon: <Gamepad2 className="w-4 h-4" />, name: "Gaming Setup" },
@@ -144,7 +149,11 @@ const PROPS: Record<string, Property> = {
     title: "Broadway Gem – Juice Press Downstairs",
     price: "$870/night",
     desc: "Bunk room + crib, cold‑press juicer, cafés & bakeries next door.",
-    images: ["/apt2.jpg", "/apt2-2.jpg", "/apt2-3.jpg"],
+    images: [
+      "/images/apt2-living.jpg",
+      "/images/apt2-kitchen.jpg",
+      "/images/apt2-bunk.jpg"
+    ],
     amenities: [
       { id: "wifi", icon: <Wifi className="w-4 h-4" />, name: "High-Speed WiFi" },
       { id: "coffee", icon: <Coffee className="w-4 h-4" />, name: "Juice Bar" },
@@ -162,7 +171,7 @@ const INFLUENCERS: Influencer[] = [
     id: "1",
     name: "Sarah Chen",
     handle: "@familytravels",
-    avatar: "/influencer1.jpg",
+    avatar: "/images/influencer-sarah.jpg",
     specialty: "Family Travel Expert",
     tip: "The Upper West Side is perfect for families. Don't miss the Natural History Museum!"
   },
@@ -170,7 +179,7 @@ const INFLUENCERS: Influencer[] = [
     id: "2",
     name: "Mike Rodriguez",
     handle: "@nycfoodie",
-    avatar: "/influencer2.jpg",
+    avatar: "/images/influencer-mike.jpg",
     specialty: "NYC Food Guide",
     tip: "Juice Press has the best green juice in the city. Perfect for morning routines!"
   },
@@ -178,7 +187,7 @@ const INFLUENCERS: Influencer[] = [
     id: "3",
     name: "Emma Williams",
     handle: "@budgetexplorer",
-    avatar: "/influencer3.jpg",
+    avatar: "/images/influencer-emma.jpg",
     specialty: "Budget Travel Pro",
     tip: "Book UWS apartments on weekdays for better rates. Save 20-30%!"
   }
@@ -191,7 +200,7 @@ const ARTICLES: Article[] = [
     excerpt: "Discover the neighborhood's best-kept secrets, from cozy cafes to peaceful parks perfect for families.",
     author: "Pablo Editorial Team",
     readTime: "5 min read",
-    image: "/article1.jpg",
+    image: "/images/article-uws.jpg",
     trending: true
   },
   {
@@ -200,7 +209,7 @@ const ARTICLES: Article[] = [
     excerpt: "Everything you need to know about exploring New York City with children of all ages.",
     author: "Family Travel Expert",
     readTime: "8 min read",
-    image: "/article2.jpg"
+    image: "/images/article-kids.jpg"
   },
   {
     id: "3",
@@ -208,7 +217,7 @@ const ARTICLES: Article[] = [
     excerpt: "Start your morning right with fresh pastries from these local favorites.",
     author: "Local Foodie",
     readTime: "3 min read",
-    image: "/article3.jpg"
+    image: "/images/article-bakeries.jpg"
   }
 ];
 
@@ -239,9 +248,9 @@ const DashboardMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
               </Button>
             </div>
             
-            <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl">
-              <div className="w-12 h-12 bg-purple-200 rounded-full flex items-center justify-center">
-                <User className="w-6 h-6 text-purple-700" />
+            <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl">
+              <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center">
+                <User className="w-6 h-6 text-blue-700" />
               </div>
               <div>
                 <p className="font-medium">Slavik K.</p>
@@ -286,7 +295,7 @@ const MenuItem = ({ icon, label, badge }: { icon: React.ReactNode; label: string
       <span className="font-medium text-gray-800">{label}</span>
     </div>
     {badge && (
-      <Badge variant="secondary" className="bg-purple-100 text-purple-700">
+      <Badge variant="secondary" className="bg-blue-100 text-blue-700">
         {badge}
       </Badge>
     )}
@@ -384,7 +393,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
           <div className="p-5 space-y-4">
             <div>
               <div className="flex items-start justify-between">
-                <h3 className="text-lg font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">
+                <h3 className="text-lg font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
                   {p.title}
                 </h3>
                 <div className="flex items-center gap-1 text-sm">
@@ -408,7 +417,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
             
             <div className="flex items-center justify-between pt-2 border-t">
               <p className="text-xl font-semibold text-gray-800">{p.price}</p>
-              <Button variant="ghost" className="text-purple-600 hover:text-purple-700 hover:bg-purple-50">
+              <Button variant="ghost" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
                 View Details
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
@@ -425,7 +434,7 @@ const InfluencerCard = ({ influencer }: { influencer: Influencer }) => (
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
     whileHover={{ y: -2 }}
-    className="bg-gradient-to-br from-purple-50 to-white p-5 rounded-2xl shadow-md hover:shadow-xl transition-all"
+    className="bg-gradient-to-br from-blue-50 to-white p-5 rounded-2xl shadow-md hover:shadow-xl transition-all"
   >
     <div className="flex items-start gap-4">
       <img 
@@ -436,7 +445,7 @@ const InfluencerCard = ({ influencer }: { influencer: Influencer }) => (
       <div className="flex-1">
         <div className="flex items-center gap-2">
           <h4 className="font-semibold text-gray-800">{influencer.name}</h4>
-          <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">
+          <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-700">
             <TrendingUp className="w-3 h-3 mr-1" />
             Insider
           </Badge>
@@ -468,7 +477,7 @@ const ArticleCard = ({ article }: { article: Article }) => (
         )}
       </div>
       <CardContent className="p-4">
-        <h3 className="font-semibold text-gray-800 group-hover:text-purple-600 transition-colors line-clamp-2">
+        <h3 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2">
           {article.title}
         </h3>
         <p className="text-sm text-gray-600 mt-2 line-clamp-2">{article.excerpt}</p>
@@ -532,7 +541,7 @@ const TypeBubble = ({
           className={
             msg.from === "pablo" 
               ? "bg-white border border-gray-200 rounded-2xl px-4 py-3 text-sm shadow-sm" 
-              : "bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-2xl px-4 py-3 text-sm shadow-sm"
+              : "bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl px-4 py-3 text-sm shadow-sm"
           }
         >
           {txt || "\u00A0"}
@@ -555,21 +564,90 @@ const PabloTypingIndicator = () => (
         <motion.div
           animate={{ y: [0, -5, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-          className="w-2 h-2 bg-purple-500 rounded-full"
+          className="w-2 h-2 bg-blue-500 rounded-full"
         />
         <motion.div
           animate={{ y: [0, -5, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-          className="w-2 h-2 bg-purple-500 rounded-full"
+          className="w-2 h-2 bg-blue-500 rounded-full"
         />
         <motion.div
           animate={{ y: [0, -5, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-          className="w-2 h-2 bg-purple-500 rounded-full"
+          className="w-2 h-2 bg-blue-500 rounded-full"
         />
       </div>
     </div>
   </motion.div>
+);
+
+// Add PaymentNotification Component
+const PaymentNotification = ({ show }: { show: boolean }) => (
+  <AnimatePresence>
+    {show && (
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -50 }}
+        className="fixed top-24 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-xl border border-blue-100 p-6 z-50 w-[400px]"
+      >
+        <div className="flex items-start gap-4">
+          <div className="flex-shrink-0">
+            <img 
+              src="/images/amex-gold-card.png" 
+              alt="American Express Gold Card" 
+              className="w-24 h-16 object-contain"
+            />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-semibold text-gray-900 mb-1">Booking Confirmed!</h3>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between text-gray-600">
+                <span>Amount:</span>
+                <span className="font-medium text-gray-900">$870.00</span>
+              </div>
+              <div className="flex justify-between text-gray-600">
+                <span>Card:</span>
+                <span>Amex Gold ****4029</span>
+              </div>
+              <div className="flex justify-between text-gray-600">
+                <span>Property:</span>
+                <span>Broadway Gem</span>
+              </div>
+              <div className="mt-3 pt-3 border-t border-gray-100">
+                <div className="flex items-center gap-2 text-blue-600">
+                  <CheckCircle2 className="w-5 h-5" />
+                  <span className="font-medium">Confirmation email sent!</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
+// Update the original Notification for processing state
+const ProcessingNotification = ({ show }: { show: boolean }) => (
+  <AnimatePresence>
+    {show && (
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -50 }}
+        className="fixed top-24 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-xl border border-blue-100 p-4 flex items-center gap-3 z-50"
+      >
+        <div className="text-blue-500">
+          <CreditCard className="w-8 h-7" />
+        </div>
+        <div>
+          <p className="text-gray-700 font-medium">Processing payment...</p>
+          <p className="text-sm text-gray-500">Amount: $870.00</p>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
 );
 
 /**************** SCRIPT ****************/
@@ -629,6 +707,10 @@ export default function PabloDemoLoop() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
+  // Add notification state
+  const [showBookingConfirmed, setShowBookingConfirmed] = useState(false);
+  const [showPaymentProcessed, setShowPaymentProcessed] = useState(false);
+  
   // Initialize audio
   useEffect(() => {
     audioRef.current = new Audio('/message-sound.mp3');
@@ -664,6 +746,16 @@ export default function PabloDemoLoop() {
         setMsgs(prev => [...prev, { from: step.from, text: step.text }]);
         setIsTypingMessage(true);
         
+        // Show notifications based on message content
+        if (step.text.includes("Booking = done!")) {
+          setShowPaymentProcessed(true);
+          setTimeout(() => setShowPaymentProcessed(false), 3000);
+          setTimeout(() => {
+            setShowBookingConfirmed(true);
+            setTimeout(() => setShowBookingConfirmed(false), 3000);
+          }, 1500);
+        }
+
         // Apply state effects with loading
         if (step.eff) {
           setIsLoading(true);
@@ -752,215 +844,251 @@ export default function PabloDemoLoop() {
     return null;
   };
 
+  // Add scroll management
+  useEffect(() => {
+    // Scroll to top on mount
+    window.scrollTo(0, 0);
+    
+    // Prevent default scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  }, []);
+
+  // Reset scroll when location changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [state.location]);
+
   /*************** RENDER ***************/
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/10 to-gray-50"
+    >
       <DashboardMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50/10 to-gray-50">
-        {/* Header */}
-        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md shadow-sm">
-          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setMenuOpen(true)}
-                className="hover:bg-purple-50"
-              >
-                <Menu className="w-5 h-5" />
-              </Button>
-              <h1 className="text-2xl font-light">
-                <span className="text-purple-600">Pablo</span> Travel
-              </h1>
+      {/* Replace old notifications with new ones */}
+      <ProcessingNotification show={showPaymentProcessed} />
+      <PaymentNotification show={showBookingConfirmed} />
+      
+      {/* Header */}
+      <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md shadow-sm">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMenuOpen(true)}
+              className="hover:bg-blue-50 -ml-3"
+            >
+              <Menu className="w-5 h-5" />
+            </Button>
+            
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10">
+                <img 
+                  src="/images/pablo-logo.svg" 
+                  alt="Pablo" 
+                  className="w-full h-full"
+                />
+              </div>
+              <div className="flex items-baseline">
+                <span className="text-2xl font-semibold tracking-tight text-gray-900">Pablo</span>
+                <span className="text-lg text-gray-500 ml-1">Travel</span>
+              </div>
             </div>
+          </div>
+          
+          <div className="flex items-center gap-4">
             <Badge variant="outline" className="text-sm">
               {state.location === "new-york" ? "📍 New York" : "🌎 Featured Destinations"}
             </Badge>
           </div>
-        </header>
-
-        <div className="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* LEFT COLUMN - Dynamic Content */}
-          <section className="lg:col-span-2 space-y-8">
-            {/* Hero Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="relative rounded-3xl overflow-hidden h-64 bg-gradient-to-br from-purple-600 to-purple-800"
-            >
-              <div className="absolute inset-0 bg-black/20" />
-              <div className="relative h-full flex items-center justify-center text-white p-8 text-center">
-                <div>
-                  <h2 className="text-3xl font-light mb-2">
-                    {state.location === "new-york" ? "Exploring New York" : "Where will Pablo take you?"}
-                  </h2>
-                  <p className="text-lg opacity-90">
-                    {state.location === "new-york" 
-                      ? "Perfect stays for the Kaushan family adventure" 
-                      : "AI-powered travel planning that knows you"}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Properties Section */}
-            <AnimatePresence mode="wait">
-              {renderProperties()}
-            </AnimatePresence>
-
-            {/* Influencer Tips */}
-            <motion.section
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Local Insider Tips</h3>
-              <div className="space-y-4">
-                {INFLUENCERS.map((influencer, i) => (
-                  <motion.div
-                    key={influencer.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                  >
-                    <InfluencerCard influencer={influencer} />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.section>
-
-            {/* Articles Section */}
-            <motion.section
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Editorial Picks</h3>
-              <div className="grid gap-4 md:grid-cols-3">
-                {ARTICLES.map((article, i) => (
-                  <motion.div
-                    key={article.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                  >
-                    <ArticleCard article={article} />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.section>
-
-            {/* Itinerary Section */}
-            <AnimatePresence>
-              {state.iti && (
-                <motion.section
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 shadow-lg"
-                >
-                  <h3 className="text-2xl font-semibold mb-6 text-purple-900">Day 1 – Arrival & Park Fun</h3>
-                  <div className="space-y-3">
-                    {[
-                      "Extra 20‑30 min for Friday traffic",
-                      "Drop bags with doorman (check‑in 3 pm)",
-                      "Lunch: Family Kitchen (GF pizza)",
-                      "Central Park scavenger hunt → zoo (red pandas!)",
-                      "Wholefoods Columbus Circle – stock fridge",
-                      "Dinner: Mo Lounge – park‑view cocktails",
-                    ].map((item, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="flex items-start gap-3"
-                      >
-                        <div className="w-6 h-6 rounded-full bg-purple-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-xs font-semibold text-purple-700">{i + 1}</span>
-                        </div>
-                        <p className="text-gray-700">{item}</p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.section>
-              )}
-            </AnimatePresence>
-
-            {/* Extra Activities */}
-            <AnimatePresence>
-              {state.extras && (
-                <motion.section
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-8 shadow-lg"
-                >
-                  <h3 className="text-2xl font-semibold mb-6 text-green-900">Special Experiences</h3>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <Card className="p-6 hover:shadow-md transition-shadow">
-                      <h4 className="font-semibold text-lg mb-2">Broadway Workshop</h4>
-                      <p className="text-gray-600 text-sm">Behind-the-scenes dance class for kids (90 min)</p>
-                    </Card>
-                    <Card className="p-6 hover:shadow-md transition-shadow">
-                      <h4 className="font-semibold text-lg mb-2">Lion King + Tech Exhibit</h4>
-                      <p className="text-gray-600 text-sm">Split the family for age-appropriate fun</p>
-                    </Card>
-                    <Card className="p-6 hover:shadow-md transition-shadow md:col-span-2">
-                      <h4 className="font-semibold text-lg mb-2">Italian Family Dinner</h4>
-                      <p className="text-gray-600 text-sm">Private room, GF pasta, kids make their own cannoli!</p>
-                    </Card>
-                  </div>
-                </motion.section>
-              )}
-            </AnimatePresence>
-          </section>
-
-          {/* CHAT COLUMN */}
-          <aside className="lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
-            <Card className="h-full shadow-xl rounded-2xl overflow-hidden">
-              <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                    <span className="text-lg">🤖</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Chat with Pablo</h3>
-                    <p className="text-xs opacity-90">Your AI Travel Companion</p>
-                  </div>
-                </div>
-              </div>
-              
-              <ScrollArea className="flex-1 p-4 h-[calc(100%-200px)]">
-                <div className="space-y-1">
-                  {msgs.map((m, i) => (
-                    <TypeBubble 
-                      key={i} 
-                      msg={m} 
-                      shouldType={i === msgs.length - 1 && isTypingMessage}
-                      onDone={i === msgs.length - 1 ? handleMessageTyped : () => {}}
-                      speed={playbackSpeed}
-                    />
-                  ))}
-                  <AnimatePresence>{typing && <PabloTypingIndicator key="typing" />}</AnimatePresence>
-                  <div ref={scrollRef} />
-                </div>
-              </ScrollArea>
-              
-              <div className="p-4 border-t bg-gray-50">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full" 
-                  onClick={reset}
-                >
-                  Restart Demo
-                </Button>
-              </div>
-            </Card>
-          </aside>
         </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* LEFT COLUMN - Dynamic Content */}
+        <section className="lg:col-span-2 space-y-8">
+          {/* Hero Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative rounded-3xl overflow-hidden h-64 bg-gradient-to-br from-blue-600 to-blue-800"
+          >
+            <div className="absolute inset-0 bg-black/20" />
+            <div className="relative h-full flex items-center justify-center text-white p-8 text-center">
+              <div>
+                <h2 className="text-3xl font-light mb-2">
+                  {state.location === "new-york" ? "Exploring New York" : "Where will Pablo take you?"}
+                </h2>
+                <p className="text-lg opacity-90">
+                  {state.location === "new-york" 
+                    ? "Perfect stays for the Kaushan family adventure" 
+                    : "AI-powered travel planning that knows you"}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Properties Section */}
+          <AnimatePresence mode="wait">
+            {renderProperties()}
+          </AnimatePresence>
+
+          {/* Influencer Tips */}
+          <motion.section
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <h3 className="text-xl font-semibold mb-4 text-gray-800">Local Insider Tips</h3>
+            <div className="space-y-4">
+              {INFLUENCERS.map((influencer, i) => (
+                <motion.div
+                  key={influencer.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <InfluencerCard influencer={influencer} />
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Articles Section */}
+          <motion.section
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <h3 className="text-xl font-semibold mb-4 text-gray-800">Editorial Picks</h3>
+            <div className="grid gap-4 md:grid-cols-3">
+              {ARTICLES.map((article, i) => (
+                <motion.div
+                  key={article.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <ArticleCard article={article} />
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Itinerary Section */}
+          <AnimatePresence>
+            {state.iti && (
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 shadow-lg"
+              >
+                <h3 className="text-2xl font-semibold mb-6 text-blue-900">Day 1 – Arrival & Park Fun</h3>
+                <div className="space-y-3">
+                  {[
+                    "Extra 20‑30 min for Friday traffic",
+                    "Drop bags with doorman (check‑in 3 pm)",
+                    "Lunch: Family Kitchen (GF pizza)",
+                    "Central Park scavenger hunt → zoo (red pandas!)",
+                    "Wholefoods Columbus Circle – stock fridge",
+                    "Dinner: Mo Lounge – park‑view cocktails",
+                  ].map((item, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="flex items-start gap-3"
+                    >
+                      <div className="w-6 h-6 rounded-full bg-blue-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-xs font-semibold text-blue-700">{i + 1}</span>
+                      </div>
+                      <p className="text-gray-700">{item}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.section>
+            )}
+          </AnimatePresence>
+
+          {/* Extra Activities */}
+          <AnimatePresence>
+            {state.extras && (
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-8 shadow-lg"
+              >
+                <h3 className="text-2xl font-semibold mb-6 text-green-900">Special Experiences</h3>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Card className="p-6 hover:shadow-md transition-shadow">
+                    <h4 className="font-semibold text-lg mb-2">Broadway Workshop</h4>
+                    <p className="text-gray-600 text-sm">Behind-the-scenes dance class for kids (90 min)</p>
+                  </Card>
+                  <Card className="p-6 hover:shadow-md transition-shadow">
+                    <h4 className="font-semibold text-lg mb-2">Lion King + Tech Exhibit</h4>
+                    <p className="text-gray-600 text-sm">Split the family for age-appropriate fun</p>
+                  </Card>
+                  <Card className="p-6 hover:shadow-md transition-shadow md:col-span-2">
+                    <h4 className="font-semibold text-lg mb-2">Italian Family Dinner</h4>
+                    <p className="text-gray-600 text-sm">Private room, GF pasta, kids make their own cannoli!</p>
+                  </Card>
+                </div>
+              </motion.section>
+            )}
+          </AnimatePresence>
+        </section>
+
+        {/* CHAT COLUMN */}
+        <aside className="lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
+          <Card className="h-full shadow-xl rounded-2xl overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                  <span className="text-lg">🤖</span>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Chat with Pablo</h3>
+                  <p className="text-xs opacity-90">Your AI Travel Companion</p>
+                </div>
+              </div>
+            </div>
+            
+            <ScrollArea className="flex-1 p-4 h-[calc(100%-200px)]">
+              <div className="space-y-1">
+                {msgs.map((m, i) => (
+                  <TypeBubble 
+                    key={i} 
+                    msg={m} 
+                    shouldType={i === msgs.length - 1 && isTypingMessage}
+                    onDone={i === msgs.length - 1 ? handleMessageTyped : () => {}}
+                    speed={playbackSpeed}
+                  />
+                ))}
+                <AnimatePresence>{typing && <PabloTypingIndicator key="typing" />}</AnimatePresence>
+                <div ref={scrollRef} />
+              </div>
+            </ScrollArea>
+            
+            <div className="p-4 border-t bg-gray-50">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full" 
+                onClick={reset}
+              >
+                Restart Demo
+              </Button>
+            </div>
+          </Card>
+        </aside>
       </div>
       
       {/* Demo Controls */}
@@ -975,6 +1103,6 @@ export default function PabloDemoLoop() {
         onSoundToggle={() => setSoundEnabled(!soundEnabled)}
         totalSteps={SCRIPT.length}
       />
-    </>
+    </motion.div>
   );
 }
