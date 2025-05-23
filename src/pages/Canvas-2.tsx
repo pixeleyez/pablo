@@ -1,4 +1,3 @@
-
 // PabloDemoLoop.tsx — Production-quality MVP with active content
 import { useEffect, useState, useCallback, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -56,7 +55,7 @@ const DemoControls = ({
       <Slider
         value={[progress]}
         max={totalSteps - 1}
-        onValueChange={([v]) => onProgressChange(v)}
+        onValueChange={([v]) => {console.log('v', v); onProgressChange(v)}}
         className="flex-1"
       />
       <span className="text-xs text-gray-500 w-8">{totalSteps}</span>
@@ -701,11 +700,6 @@ const SCRIPT: { from: "pablo" | "user"; text: string; eff?: (s: DemoState) => De
   { from: "user", text: "no flights yet, are dates flexible? Book 2nd option for now, need flexibility w/ dates/cancel; also, need activities w/kids" },
   {
     from: "pablo",
-    text: "Okay! ",
-    eff: (s) => ({ ...s, iti: true }),
-  },
-  {
-    from: "pablo",
     text: "Booking = done! Give me a few minutes to amaze you – sending confirmation email. Day 1: Traffic could be heavier on Friday, plan extra 20‑30 min to get to UWS. Check‑in at 3 pm but you can leave luggage with the doorman; walk 3 min to INCREDIBLE place 'Family Kitchen' toward Broadway, known for GF pizza; sunny & warm forecast – best friend = Central Park playground right after. Remember the scavenger hunt I made at the local park? I've created a special Central Park version! It takes you past Belvedere Castle (Gracie can pretend she's a princess again), the Alice in Wonderland statue (perfect for those family photos Olga loves), and the zoo (they've got new red pandas!). Then walk to Columbus Circle; Wholefoods downstairs to stock the fridge. Dinner – finger‑food lounge 'Mo Lounge' with the best Central Park view, known for cocktails!",
     eff: (s) => ({ ...s, iti: true }),
   },
@@ -767,7 +761,6 @@ export default function PabloDemoLoop() {
   // Handle progression to next message
   const progressToNext = useCallback(() => {
     if (!isPlaying || currentMsgIndex >= SCRIPT.length) return;
-
     const step = SCRIPT[currentMsgIndex];
 
     if (step.from === "pablo") {
@@ -792,6 +785,10 @@ export default function PabloDemoLoop() {
               setTimeout(() => setShowBookingConfirmed(false), 4000);
             }, 500);
           }, 2000);
+        }
+
+        if(step.text.startsWith("compare them")) {
+            // setState(s => ({ ...s, compare: true }));
         }
 
         // Apply state effects with loading
@@ -838,19 +835,11 @@ export default function PabloDemoLoop() {
     setIsTypingMessage(false);
   }, []);
 
-  // Start the conversation
   useEffect(() => {
-    if (currentMsgIndex === 0 && msgs.length === 0 && isPlaying) {
+    if (!(currentMsgIndex +1 >= SCRIPT.length)) {
       progressToNext();
     }
-  }, [currentMsgIndex, msgs.length, isPlaying, progressToNext]);
-
-  // Progress when ready for next message
-  useEffect(() => {
-    if (!isTypingMessage && !typing && currentMsgIndex > 0 && currentMsgIndex < SCRIPT.length && isPlaying) {
-      progressToNext();
-    }
-  }, [currentMsgIndex, isTypingMessage, typing, isPlaying, progressToNext]);
+  }, [currentMsgIndex]);
 
   const reset = () => {
     setMsgs([]);
