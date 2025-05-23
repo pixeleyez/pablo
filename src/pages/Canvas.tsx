@@ -493,13 +493,11 @@ const TypeBubble = ({
   speed?: number;
 }) => {
   const [txt, setTxt] = useState("");
-  const [showReactions, setShowReactions] = useState(false);
   
   useEffect(() => {
     if (!shouldType) {
       setTxt(msg.text);
       onDone();
-      setTimeout(() => setShowReactions(true), 500);
       return;
     }
     
@@ -515,7 +513,6 @@ const TypeBubble = ({
       if (currentIndex >= msg.text.length) {
         clearInterval(iv);
         setTimeout(() => {
-          setShowReactions(true);
           onDone();
         }, 300);
       }
