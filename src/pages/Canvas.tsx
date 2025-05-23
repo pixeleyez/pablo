@@ -7,17 +7,17 @@ import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Play, Pause, Volume2, VolumeX, MapPin, Wifi, Coffee, 
+import {
+  Play, Pause, Volume2, VolumeX, MapPin, Wifi, Coffee,
   Dumbbell, Car, Baby, Gamepad2, Menu, X, MessageSquare,
   Inbox, Image as ImageIcon, User, Edit, Star, Heart,
   Bookmark, TrendingUp, Calendar, ChevronRight, CreditCard,
   CheckCircle2
 } from "lucide-react";
 
-const DemoControls = ({ 
-  isPlaying, 
-  onPlayPause, 
+const DemoControls = ({
+  isPlaying,
+  onPlayPause,
   progress,
   onProgressChange,
   speed,
@@ -36,31 +36,31 @@ const DemoControls = ({
   onSoundToggle: () => void;
   totalSteps: number;
 }) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white rounded-full shadow-lg px-6 py-3 flex items-center gap-4 z-50 border border-gray-200"
   >
-    <Button 
-      size="sm" 
-      variant="ghost" 
+    <Button
+      size="sm"
+      variant="ghost"
       onClick={onPlayPause}
       className="hover:bg-blue-50"
     >
       {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
     </Button>
-    
+
     <div className="flex items-center gap-3 w-64">
       <span className="text-xs text-gray-500 w-8">{progress + 1}</span>
-      <Slider 
-        value={[progress]} 
+      <Slider
+        value={[progress]}
         max={totalSteps - 1}
         onValueChange={([v]) => onProgressChange(v)}
         className="flex-1"
       />
       <span className="text-xs text-gray-500 w-8">{totalSteps}</span>
     </div>
-    
+
     <Select value={speed.toString()} onValueChange={onSpeedChange}>
       <SelectTrigger className="w-16 h-8">
         <SelectValue />
@@ -72,7 +72,7 @@ const DemoControls = ({
         <SelectItem value="2">2×</SelectItem>
       </SelectContent>
     </Select>
-    
+
     <Button
       size="sm"
       variant="ghost"
@@ -87,11 +87,11 @@ const DemoControls = ({
 /**************** TYPES ****************/
 interface Msg { from: "pablo" | "user"; text: string }
 interface Amenity { id: string; icon: React.ReactNode; name: string }
-interface Property { 
-  id: string; 
-  title: string; 
-  price: string; 
-  desc: string; 
+interface Property {
+  id: string;
+  title: string;
+  price: string;
+  desc: string;
   images: string[];
   amenities: Amenity[];
   location: string;
@@ -115,10 +115,10 @@ interface Article {
   image: string;
   trending?: boolean;
 }
-interface DemoState { 
-  current: "p1" | "p2" | null; 
-  compare: boolean; 
-  iti: boolean; 
+interface DemoState {
+  current: "p1" | "p2" | null;
+  compare: boolean;
+  iti: boolean;
   extras: boolean;
   location: string;
 }
@@ -247,7 +247,7 @@ const DashboardMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 <X className="w-5 h-5" />
               </Button>
             </div>
-            
+
             <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl">
               <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center">
                 <User className="w-6 h-6 text-blue-700" />
@@ -312,7 +312,7 @@ const StatCard = ({ label, value }: { label: string; value: string }) => (
 const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) => {
   const [currentImage, setCurrentImage] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  
+
   if (isLoading) {
     return (
       <Card className="rounded-2xl overflow-hidden animate-pulse">
@@ -325,7 +325,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
       </Card>
     );
   }
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -337,10 +337,10 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
         <CardContent className="p-0">
           <div className="relative h-56 overflow-hidden">
             <AnimatePresence mode="wait">
-              <motion.img 
+              <motion.img
                 key={currentImage}
-                src={p.images[currentImage]} 
-                alt={p.title} 
+                src={p.images[currentImage]}
+                alt={p.title}
                 className="h-full w-full object-cover"
                 initial={{ opacity: 0, scale: 1.1 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -348,22 +348,21 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
                 transition={{ duration: 0.4 }}
               />
             </AnimatePresence>
-            
+
             {/* Image navigation */}
             <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1.5">
               {p.images.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrentImage(i)}
-                  className={`transition-all ${
-                    i === currentImage 
-                      ? "w-8 h-2 bg-white" 
+                  className={`transition-all ${i === currentImage
+                      ? "w-8 h-2 bg-white"
                       : "w-2 h-2 bg-white/60 hover:bg-white/80"
-                  } rounded-full`}
+                    } rounded-full`}
                 />
               ))}
             </div>
-            
+
             {/* Action buttons */}
             <div className="absolute top-3 right-3 flex gap-2">
               <motion.button
@@ -380,7 +379,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
                 <Bookmark className="w-4 h-4 text-gray-700" />
               </motion.button>
             </div>
-            
+
             {/* Location badge */}
             <div className="absolute top-3 left-3">
               <Badge className="bg-white/90 backdrop-blur text-gray-800 shadow-lg">
@@ -389,7 +388,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
               </Badge>
             </div>
           </div>
-          
+
           <div className="p-5 space-y-4">
             <div>
               <div className="flex items-start justify-between">
@@ -404,7 +403,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
               </div>
               <p className="text-sm text-gray-600 mt-1">{p.desc}</p>
             </div>
-            
+
             {/* Amenities */}
             <div className="flex flex-wrap gap-2">
               {p.amenities.map((amenity) => (
@@ -414,7 +413,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
                 </Badge>
               ))}
             </div>
-            
+
             <div className="flex items-center justify-between pt-2 border-t">
               <p className="text-xl font-semibold text-gray-800">{p.price}</p>
               <Button variant="ghost" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
@@ -437,8 +436,8 @@ const InfluencerCard = ({ influencer }: { influencer: Influencer }) => (
     className="bg-gradient-to-br from-blue-50 to-white p-5 rounded-2xl shadow-md hover:shadow-xl transition-all"
   >
     <div className="flex items-start gap-4">
-      <img 
-        src={influencer.avatar} 
+      <img
+        src={influencer.avatar}
         alt={influencer.name}
         className="w-12 h-12 rounded-full object-cover"
       />
@@ -460,65 +459,69 @@ const InfluencerCard = ({ influencer }: { influencer: Influencer }) => (
 const ArticleCard = ({ article }: { article: Article }) => (
   <motion.div
     whileHover={{ y: -2 }}
-    className="group cursor-pointer"
+    className="bg-white rounded-2xl overflow-hidden"
   >
-    <Card className="overflow-hidden h-full hover:shadow-xl transition-all duration-300">
-      <div className="relative h-48 overflow-hidden">
-        <img 
-          src={article.image} 
-          alt={article.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-        {article.trending && (
-          <Badge className="absolute top-3 left-3 bg-red-500 text-white">
-            <TrendingUp className="w-3 h-3 mr-1" />
-            Trending
-          </Badge>
-        )}
+    <div className="aspect-[3/2] relative">
+      <img
+        src={article.image}
+        alt={article.title}
+        className="w-full h-full object-cover"
+      />
+      {article.trending && (
+        <Badge className="absolute top-3 left-3 bg-blue-600 text-white border-0">
+          <TrendingUp className="w-3 h-3 mr-1" />
+          Trending
+        </Badge>
+      )}
+    </div>
+    <div className="p-4">
+      <h3 className="font-medium text-gray-900">{article.title}</h3>
+      <div className="flex items-center justify-between mt-2 text-sm text-gray-500">
+        <span>{article.author}</span>
+        <span>{article.readTime}</span>
       </div>
-      <CardContent className="p-4">
-        <h3 className="font-semibold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2">
-          {article.title}
-        </h3>
-        <p className="text-sm text-gray-600 mt-2 line-clamp-2">{article.excerpt}</p>
-        <div className="flex items-center justify-between mt-4 text-xs text-gray-500">
-          <span>{article.author}</span>
-          <span>{article.readTime}</span>
-        </div>
-      </CardContent>
-    </Card>
+    </div>
   </motion.div>
 );
 
-const TypeBubble = ({ 
-  msg, 
-  onDone, 
+// Add UserAvatar component
+const UserAvatar = ({ className = "" }: { className?: string }) => (
+  <div className={`rounded-full overflow-hidden flex-shrink-0 ${className} bg-sky-100 text-sky-500`}>
+    <div className="w-full h-full flex items-center justify-center text-sm font-medium">
+      SK
+    </div>
+  </div>
+);
+
+const TypeBubble = ({
+  msg,
+  onDone,
   shouldType,
   speed = 1
-}: { 
-  msg: Msg; 
-  onDone: () => void; 
+}: {
+  msg: Msg;
+  onDone: () => void;
   shouldType: boolean;
   speed?: number;
 }) => {
   const [txt, setTxt] = useState("");
-  
+
   useEffect(() => {
     if (!shouldType) {
       setTxt(msg.text);
       onDone();
       return;
     }
-    
+
     let currentIndex = 0;
     const baseDelay = msg.from === "pablo" ? 35 : 25;
     const adjustedDelay = baseDelay / speed;
-    
+
     const iv = setInterval(() => {
       currentIndex++;
       const next = msg.text.slice(0, currentIndex);
       setTxt(next);
-      
+
       if (currentIndex >= msg.text.length) {
         clearInterval(iv);
         setTimeout(() => {
@@ -526,55 +529,61 @@ const TypeBubble = ({
         }, 300);
       }
     }, adjustedDelay);
-    
+
     return () => clearInterval(iv);
   }, [msg.text, onDone, shouldType, speed, msg.from]);
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 10 }} 
-      animate={{ opacity: 1, y: 0 }} 
-      className={`mb-3 group ${msg.from === "pablo" ? "text-left" : "text-right"}`}
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className={`mb-4 flex items-end gap-3 ${msg.from === "pablo" ? "" : "flex-row-reverse"}`}
     >
-      <div className="inline-block max-w-[80%]">
-        <div 
-          className={
-            msg.from === "pablo" 
-              ? "bg-white border border-gray-200 rounded-2xl px-4 py-3 text-sm shadow-sm" 
-              : "bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl px-4 py-3 text-sm shadow-sm"
-          }
-        >
-          {txt || "\u00A0"}
+      {msg.from === "pablo" ? (
+        <div className="size-12 rounded-full overflow-hidden flex-shrink-0 bg-amber-100">
+          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+            <span className="text-lg">🤖</span>
+          </div>
         </div>
+      ) : (
+        <UserAvatar className="w-8 h-8" />
+      )}
+      <div
+        className={`relative max-w-[80%] rounded-[15px] px-4 py-3 text-[15px] ${msg.from === "pablo"
+            ? "bg-blue-50 text-slate-800 rounded-bl-none"
+            : "bg-slate-600 text-white rounded-br-none"
+          }`}
+      >
+        {txt || "\u00A0"}
       </div>
     </motion.div>
   );
 };
 
 const PabloTypingIndicator = () => (
-  <motion.div 
-    initial={{ opacity: 0, y: 10 }} 
-    animate={{ opacity: 1, y: 0 }} 
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -10 }}
-    className="mb-3 text-left"
+    className="mb-6 flex items-start gap-3"
   >
     <div className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-3 shadow-sm">
       <span className="text-sm text-gray-600">Pablo is thinking</span>
       <div className="flex gap-1">
         <motion.div
-          animate={{ y: [0, -5, 0] }}
+          animate={{ y: [0, -3, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-          className="w-2 h-2 bg-blue-500 rounded-full"
+          className="w-1.5 h-1.5 bg-gray-400 rounded-full"
         />
         <motion.div
-          animate={{ y: [0, -5, 0] }}
+          animate={{ y: [0, -3, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-          className="w-2 h-2 bg-blue-500 rounded-full"
+          className="w-1.5 h-1.5 bg-gray-400 rounded-full"
         />
         <motion.div
-          animate={{ y: [0, -5, 0] }}
+          animate={{ y: [0, -3, 0] }}
           transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-          className="w-2 h-2 bg-blue-500 rounded-full"
+          className="w-1.5 h-1.5 bg-gray-400 rounded-full"
         />
       </div>
     </div>
@@ -617,9 +626,9 @@ const PaymentNotification = ({ show }: { show: boolean }) => (
       >
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0">
-            <img 
-              src="/images/amex-gold-card.png" 
-              alt="American Express Gold Card" 
+            <img
+              src="/images/amex-gold-card.png"
+              alt="American Express Gold Card"
               className="w-24 h-16 object-contain"
             />
           </div>
@@ -695,64 +704,64 @@ export default function PabloDemoLoop() {
   const [currentMsgIndex, setCurrentMsgIndex] = useState(0);
   const [typing, setTyping] = useState(false);
   const [isTypingMessage, setIsTypingMessage] = useState(false);
-  const [state, setState] = useState<DemoState>({ 
-    current: null, 
-    compare: false, 
-    iti: false, 
+  const [state, setState] = useState<DemoState>({
+    current: null,
+    compare: false,
+    iti: false,
     extras: false,
-    location: "featured" 
+    location: "featured"
   });
   const [isLoading, setIsLoading] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  
+
   // Demo controls state
   const [isPlaying, setIsPlaying] = useState(true);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [soundEnabled, setSoundEnabled] = useState(false);
-  
+
   // Refs
   const scrollRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  
+
   // Add notification state
   const [showBookingConfirmed, setShowBookingConfirmed] = useState(false);
   const [showPaymentProcessed, setShowPaymentProcessed] = useState(false);
-  
+
   // Initialize audio
   useEffect(() => {
     audioRef.current = new Audio('/message-sound.mp3');
     audioRef.current.volume = 0.2;
   }, []);
-  
+
   // Auto-scroll to bottom
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [msgs, typing]);
-  
+
   // Play sound effect
   const playMessageSound = useCallback(() => {
     if (soundEnabled && audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(() => {});
+      audioRef.current.play().catch(() => { });
     }
   }, [soundEnabled]);
 
   // Handle progression to next message
   const progressToNext = useCallback(() => {
     if (!isPlaying || currentMsgIndex >= SCRIPT.length) return;
-    
+
     const step = SCRIPT[currentMsgIndex];
-    
+
     if (step.from === "pablo") {
       setTyping(true);
       playMessageSound();
-      
+
       const typingDuration = 1500 / playbackSpeed;
       setTimeout(() => {
         setTyping(false);
         setMsgs(prev => [...prev, { from: step.from, text: step.text }]);
         setIsTypingMessage(true);
-        
+
         // Show notifications based on message content
         if (step.text.startsWith("Booking = done!")) {
           // First show payment processing
@@ -795,15 +804,15 @@ export default function PabloDemoLoop() {
   // Jump to specific message
   const jumpToMessage = useCallback((index: number) => {
     if (index < 0 || index >= SCRIPT.length) return;
-    
+
     const messagesToShow = SCRIPT.slice(0, index + 1);
     const newMsgs = messagesToShow.map(s => ({ from: s.from, text: s.text }));
-    
+
     let newState: DemoState = { current: null, compare: false, iti: false, extras: false, location: "featured" };
     messagesToShow.forEach(s => {
       if (s.eff) newState = s.eff(newState);
     });
-    
+
     setMsgs(newMsgs);
     setState(newState);
     setCurrentMsgIndex(index + 1);
@@ -838,7 +847,7 @@ export default function PabloDemoLoop() {
   const renderProperties = () => {
     if (state.compare) {
       return (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
@@ -859,7 +868,7 @@ export default function PabloDemoLoop() {
   useEffect(() => {
     // Scroll to top on mount
     window.scrollTo(0, 0);
-    
+
     // Prevent default scroll restoration
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
@@ -888,14 +897,14 @@ export default function PabloDemoLoop() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/10 to-gray-50"
+      className="min-h-screen bg-gray-100"
     >
       <DashboardMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
-      
+
       {/* Add Notifications */}
       <ProcessingNotification show={showPaymentProcessed} />
       <PaymentNotification show={showBookingConfirmed} />
-      
+
       {/* Header */}
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md shadow-sm">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -908,12 +917,12 @@ export default function PabloDemoLoop() {
             >
               <Menu className="w-5 h-5" />
             </Button>
-            
+
             <div className="flex items-center gap-2">
               <div className="w-10 h-10">
-                <img 
-                  src="/images/pablo-logo.svg" 
-                  alt="Pablo" 
+                <img
+                  src="/images/pablo-logo.svg"
+                  alt="Pablo"
                   className="w-full h-full"
                 />
               </div>
@@ -923,7 +932,7 @@ export default function PabloDemoLoop() {
               </div>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-4">
             {/* Add test button */}
             <Button
@@ -957,8 +966,8 @@ export default function PabloDemoLoop() {
                   {state.location === "new-york" ? "Exploring New York" : "Where will Pablo take you?"}
                 </h2>
                 <p className="text-lg opacity-90">
-                  {state.location === "new-york" 
-                    ? "Perfect stays for the Kaushan family adventure" 
+                  {state.location === "new-york"
+                    ? "Perfect stays for the Kaushan family adventure"
                     : "AI-powered travel planning that knows you"}
                 </p>
               </div>
@@ -970,47 +979,25 @@ export default function PabloDemoLoop() {
             {renderProperties()}
           </AnimatePresence>
 
-          {/* Influencer Tips */}
-          <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">Local Insider Tips</h3>
-            <div className="space-y-4">
-              {INFLUENCERS.map((influencer, i) => (
-                <motion.div
-                  key={influencer.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <InfluencerCard influencer={influencer} />
-                </motion.div>
+          {/* Influencers Grid */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-medium text-gray-900 mb-6">Local Experts</h2>
+            <div className="space-y-3">
+              {INFLUENCERS.map((influencer) => (
+                <InfluencerCard key={influencer.id} influencer={influencer} />
               ))}
             </div>
-          </motion.section>
+          </div>
 
-          {/* Articles Section */}
-          <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <h3 className="text-xl font-semibold mb-4 text-gray-800">Editorial Picks</h3>
-            <div className="grid gap-4 md:grid-cols-3">
-              {ARTICLES.map((article, i) => (
-                <motion.div
-                  key={article.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <ArticleCard article={article} />
-                </motion.div>
+          {/* Articles Grid */}
+          <div>
+            <h2 className="text-2xl font-medium text-gray-900 mb-6">Travel Stories</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {ARTICLES.map((article) => (
+                <ArticleCard key={article.id} article={article} />
               ))}
             </div>
-          </motion.section>
+          </div>
 
           {/* Itinerary Section */}
           <AnimatePresence>
@@ -1092,15 +1079,15 @@ export default function PabloDemoLoop() {
                 </div>
               </div>
             </div>
-            
-            <ScrollArea className="flex-1 p-4 h-[calc(100%-200px)]">
+
+            <ScrollArea className="flex-1 p-4 h-[calc(100%-200px)] text-start">
               <div className="space-y-1">
                 {msgs.map((m, i) => (
-                  <TypeBubble 
-                    key={i} 
-                    msg={m} 
+                  <TypeBubble
+                    key={i}
+                    msg={m}
                     shouldType={i === msgs.length - 1 && isTypingMessage}
-                    onDone={i === msgs.length - 1 ? handleMessageTyped : () => {}}
+                    onDone={i === msgs.length - 1 ? handleMessageTyped : () => { }}
                     speed={playbackSpeed}
                   />
                 ))}
@@ -1108,12 +1095,12 @@ export default function PabloDemoLoop() {
                 <div ref={scrollRef} />
               </div>
             </ScrollArea>
-            
+
             <div className="p-4 border-t bg-gray-50">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full" 
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full"
                 onClick={reset}
               >
                 Restart Demo
@@ -1122,7 +1109,7 @@ export default function PabloDemoLoop() {
           </Card>
         </aside>
       </div>
-      
+
       {/* Demo Controls */}
       <DemoControls
         isPlaying={isPlaying}
