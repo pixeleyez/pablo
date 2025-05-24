@@ -1,4 +1,3 @@
-
 // PabloDemoLoop.tsx — Production-quality MVP with active content
 import { useEffect, useState, useCallback, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,13 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Play, Pause, Volume2, VolumeX, MapPin, Wifi, Coffee,
   Dumbbell, Car, Baby, Gamepad2, Menu, X, MessageSquare,
   Inbox, Image as ImageIcon, User, Edit, Star, Heart,
   Bookmark, TrendingUp, Calendar, ChevronRight, CreditCard,
-  CheckCircle2
+  CheckCircle2, Instagram, Facebook, Twitter, Sparkles, Lock,
+  Send, Mail, Phone, Building2
 } from "lucide-react";
 
 const DemoControls = ({
@@ -122,10 +123,55 @@ interface DemoState {
   iti: boolean;
   extras: boolean;
   location: string;
+  showAuthPopup: boolean;
+  isPersonalized: boolean;
 }
 
 /**************** STATIC DATA ****************/
-const PROPS: Record<string, Property> = {
+// Generic properties for initial state
+const GENERIC_PROPS: Record<string, Property> = {
+  generic1: {
+    id: "generic1",
+    title: "Luxury Beachfront Villa",
+    price: "$650/night",
+    desc: "Stunning oceanview property with private beach access.",
+    images: [
+      "/images/beach-villa-1.jpg",
+      "/images/beach-villa-2.jpg",
+      "/images/beach-villa-3.jpg"
+    ],
+    amenities: [
+      { id: "wifi", icon: <Wifi className="w-4 h-4" />, name: "High-Speed WiFi" },
+      { id: "pool", icon: <Coffee className="w-4 h-4" />, name: "Private Pool" },
+      { id: "parking", icon: <Car className="w-4 h-4" />, name: "Parking" },
+    ],
+    location: "Malibu, California",
+    rating: 4.8,
+    reviews: 234
+  },
+  generic2: {
+    id: "generic2",
+    title: "Mountain Retreat Cabin",
+    price: "$420/night",
+    desc: "Cozy cabin surrounded by nature, perfect for relaxation.",
+    images: [
+      "/images/mountain-cabin-1.jpg",
+      "/images/mountain-cabin-2.jpg",
+      "/images/mountain-cabin-3.jpg"
+    ],
+    amenities: [
+      { id: "wifi", icon: <Wifi className="w-4 h-4" />, name: "WiFi" },
+      { id: "fireplace", icon: <Coffee className="w-4 h-4" />, name: "Fireplace" },
+      { id: "hiking", icon: <Dumbbell className="w-4 h-4" />, name: "Hiking Trails" },
+    ],
+    location: "Aspen, Colorado",
+    rating: 4.9,
+    reviews: 156
+  },
+};
+
+// Personalized properties (existing ones renamed)
+const PERSONALIZED_PROPS: Record<string, Property> = {
   p1: {
     id: "p1",
     title: "4‑BDR UWS Apt – Gaming Corner",
@@ -671,40 +717,356 @@ const PaymentNotification = ({ show }: { show: boolean }) => (
   </AnimatePresence>
 );
 
+// Add Social Auth Popup component
+const SocialAuthPopup = ({ show, onClose, onAuthorize }: { show: boolean; onClose: () => void; onAuthorize: () => void }) => (
+  <AnimatePresence>
+    {show && (
+      <>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+          onClick={onClose}
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-8 z-50 w-[450px]"
+        >
+          <div className="text-center mb-6">
+            <div className="w-16 h-16 bg-[#F5F1ED] rounded-full flex items-center justify-center mx-auto mb-4">
+              <Lock className="w-8 h-8 text-[#7e6441]" />
+            </div>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Connect Your Social Media</h2>
+            <p className="text-gray-600">Let Pablo personalize your travel recommendations based on your interests and preferences</p>
+          </div>
+
+          <div className="space-y-3 mb-6">
+            <button 
+              onClick={onAuthorize}
+              className="w-full flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <Instagram className="w-5 h-5 text-pink-600" />
+              <span className="flex-1 text-left font-medium">Connect Instagram</span>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
+            </button>
+            
+            <button className="w-full flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors opacity-50 cursor-not-allowed">
+              <Facebook className="w-5 h-5 text-blue-600" />
+              <span className="flex-1 text-left font-medium">Connect Facebook</span>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
+            </button>
+            
+            <button className="w-full flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors opacity-50 cursor-not-allowed">
+              <Twitter className="w-5 h-5 text-sky-500" />
+              <span className="flex-1 text-left font-medium">Connect Twitter</span>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2 p-4 bg-green-50 rounded-lg mb-6">
+            <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
+            <p className="text-sm text-green-800">Your data is secure and only used to enhance your experience</p>
+          </div>
+
+          <div className="flex gap-3">
+            <Button variant="outline" onClick={onClose} className="flex-1">
+              Maybe Later
+            </Button>
+            <Button onClick={onAuthorize} className="flex-1 bg-[#7e6441] hover:bg-[#6a5637]">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Authorize & Personalize
+            </Button>
+          </div>
+        </motion.div>
+      </>
+    )}
+  </AnimatePresence>
+);
+
+// Add Loading Animation component
+const PersonalizingLoader = ({ show }: { show: boolean }) => (
+  <AnimatePresence>
+    {show && (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-white/90 backdrop-blur z-50 flex items-center justify-center"
+      >
+        <div className="text-center">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="w-20 h-20 rounded-full border-4 border-[#f5f1ed] border-t-[#7e6441] mx-auto mb-4"
+          />
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">Analyzing your preferences...</h3>
+          <p className="text-gray-600">Pablo is creating personalized recommendations just for you</p>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
+// Add Demo Request Popup component
+const DemoRequestPopup = ({ 
+  show, 
+  onClose, 
+  onSubmit, 
+  initialMessage 
+}: { 
+  show: boolean; 
+  onClose: () => void; 
+  onSubmit: (data: any) => void;
+  initialMessage: string;
+}) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    message: initialMessage
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(formData);
+    onClose();
+  };
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+            onClick={onClose}
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-8 z-50 w-[500px] max-h-[90vh] overflow-y-auto"
+          >
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-[#F5F1ED] rounded-full flex items-center justify-center mx-auto mb-4">
+                <MessageSquare className="w-8 h-8 text-[#7e6441]" />
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2">Request a Demo</h2>
+              <p className="text-gray-600">Let's set up a personalized demo to show you how Pablo can transform your travel experience</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Name *
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    required
+                    placeholder="John Doe"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address *
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    required
+                    type="email"
+                    placeholder="john@example.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Phone Number
+                </label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    type="tel"
+                    placeholder="+1 (555) 123-4567"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Company
+                </label>
+                <div className="relative">
+                  <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Input
+                    placeholder="Your Company"
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Your Message
+                </label>
+                <Input
+                  placeholder="Tell us about your travel needs..."
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="resize-none"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 p-4 bg-green-50 rounded-lg">
+                <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
+                <p className="text-sm text-green-800">We'll contact you within 24 hours to schedule your demo</p>
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+                  Cancel
+                </Button>
+                <Button type="submit" className="flex-1 bg-[#7e6441] hover:bg-[#6a5637]">
+                  <Send className="w-4 h-4 mr-2" />
+                  Request Demo
+                </Button>
+              </div>
+            </form>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
+// Add Customer Input Section component
+const CustomerInputSection = ({ onRequestDemo }: { onRequestDemo: (message: string) => void }) => {
+  const [message, setMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+
+  const handleSubmit = () => {
+    if (message.trim()) {
+      onRequestDemo(message);
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-white rounded-2xl shadow-lg p-8 mb-8"
+    >
+      <div className="text-center mb-6">
+        <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+          Tell Us About Your Travel Dreams
+        </h3>
+        <p className="text-gray-600">
+          Share what kind of experiences you're looking for, and let's create something amazing together
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        <Input
+          placeholder="I'm looking for family-friendly destinations with activities for kids..."
+          value={message}
+          onChange={(e) => {
+            setMessage(e.target.value);
+            setIsTyping(true);
+            setTimeout(() => setIsTyping(false), 1000);
+          }}
+          className="resize-none text-lg"
+        />
+
+        <div className="flex items-center justify-between">
+          <AnimatePresence>
+            {isTyping && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="text-sm text-gray-500"
+              >
+                Pablo is listening...
+              </motion.p>
+            )}
+          </AnimatePresence>
+
+          <Button
+            onClick={handleSubmit}
+            disabled={!message.trim()}
+            className="ml-auto bg-[#7e6441] hover:bg-[#6a5637] disabled:opacity-50"
+          >
+            <MessageSquare className="w-4 h-4 mr-2" />
+            Request Personalized Demo
+          </Button>
+        </div>
+      </div>
+
+      {message.trim() && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          className="mt-4 p-4 bg-[#F5F1ED] rounded-lg"
+        >
+          <p className="text-sm text-[#7e6441]">
+            <Sparkles className="w-4 h-4 inline mr-1" />
+            Great! Click the button above to get your personalized demo based on your interests.
+          </p>
+        </motion.div>
+      )}
+    </motion.div>
+  );
+};
+
 /**************** SCRIPT ****************/
 const SCRIPT: { from: "pablo" | "user"; text: string; eff?: (s: DemoState) => DemoState }[] = [
   {
     from: "pablo",
-    text: "Hey Super Dad! I've been thinking about your crew – how are my favorite munchkins doing? They're now 1, 7, 10, 12, 13 if I'm correct? Budget still < $800? Check out this 4‑BDR UWS apt – $789/night – has the gaming corner your big boys loved in Palm Beach resort plus a beautiful view from the master bedroom (remember last summer, the balcony over the Seine?) – check the video!",
-    eff: (s) => ({ ...s, current: "p1", location: "new-york" }),
+    text: "Hey there! I'm Pablo, your AI travel companion. I help travelers find perfect stays and create amazing experiences. What brings you here today?",
   },
-  { from: "user", text: "any food place (bakery etc) close by?" },
-  {
-    from: "pablo",
-    text: "Oh Slavik, I've got your back! Remember how smoothly we handled Disney in France last year? NYC will be a breeze! Here, check this one – THE PERFECT place closer to Broadway, also on the UWS, honestly feels made for the Kaushan family! Just a bit over budget at $870 – too steep? It's peak season in the Big Apple; we'd need to move downtown for more availability if you don't like either, but I'd advise against shlepping the kids on the train… UWS is my preference knowing you guys – thoughts?",
-    eff: (s) => ({ ...s, current: "p2" }),
-  },
-  { from: "user", text: "compare them" },
-  {
-    from: "pablo",
-    text: "First one gives you a view of Central Park but food places are a 5‑min walk; the other has no park view but coffee/bakeries super close. Olga still loves her morning green juice? Get this – not only full kitchen with a cold‑press juicer but also a Juice Press store downstairs! Great bakery next door and a 5‑min walk to some amazing restaurants (Daniel Boulud etc.). All boys can fit in one room with bunk beds, Gracie on her own like a proper princess, and a crib for Sophie in your bedroom as requested!",
-    eff: (s) => ({ ...s, compare: true }),
-  },
-  { from: "user", text: "no flights yet, are dates flexible? Book 2nd option for now, need flexibility w/ dates/cancel; also, need activities w/kids" },
-  {
-    from: "pablo",
-    text: "Okay! ",
-    eff: (s) => ({ ...s, iti: true }),
+  { 
+    from: "user", 
+    text: "Hi Pablo! Looking for some travel inspiration" 
   },
   {
     from: "pablo",
-    text: "Booking = done! Give me a few minutes to amaze you – sending confirmation email. Day 1: Traffic could be heavier on Friday, plan extra 20‑30 min to get to UWS. Check‑in at 3 pm but you can leave luggage with the doorman; walk 3 min to INCREDIBLE place 'Family Kitchen' toward Broadway, known for GF pizza; sunny & warm forecast – best friend = Central Park playground right after. Remember the scavenger hunt I made at the local park? I've created a special Central Park version! It takes you past Belvedere Castle (Gracie can pretend she's a princess again), the Alice in Wonderland statue (perfect for those family photos Olga loves), and the zoo (they've got new red pandas!). Then walk to Columbus Circle; Wholefoods downstairs to stock the fridge. Dinner – finger‑food lounge 'Mo Lounge' with the best Central Park view, known for cocktails!",
-    eff: (s) => ({ ...s, iti: true }),
+    text: "Great! I'd love to help you discover something truly special. You know, I can create much more personalized recommendations if I could learn a bit about your interests and travel style. Would you mind if I connected with your social media? It helps me understand what you love and suggest places you'll absolutely adore! 🌟",
+    eff: (s) => ({ ...s, showAuthPopup: true }),
+  },
+  { 
+    from: "user", 
+    text: "Sure, that sounds helpful!" 
   },
   {
     from: "pablo",
-    text: "I have a special suggestion for your big girls, but the boys may like it too: a behind‑the‑scenes Broadway workshop in the morning – they learn a dance number! I know the instructor; she's amazing with kids of different energy levels (90 min). Alternatively, tickets available for Lion King (wife's bucket‑list 😉) – min age 4; if you split with Sophie and some boys, there's a tech exhibit 3 blocks from the theatre the boys would love. For dinner, incredible Italian near the apartment – they make GF pasta (spaghetti carbonara a hit). Best part? Private room where kids can be loud, and they let kids make their own cannoli for dessert – GF ones too! Should I try to get a reservation?",
-    eff: (s) => ({ ...s, extras: true }),
+    text: "Fantastic! I've analyzed your posts and I'm already excited about what I found! I see you're a family traveler with 5 kids (wow!), you love gaming setups for the older ones, and healthy food options are important. Based on your recent posts about wanting a New York adventure, I've found some PERFECT options for you!",
+    eff: (s) => ({ ...s, current: "p1", location: "new-york", isPersonalized: true }),
+  },
+  {
+    from: "pablo",
+    text: "Check out this 4-BDR Upper West Side apartment – $789/night – it has the gaming corner your boys will love (just like that Palm Beach resort you posted about!), plus a stunning park view from the master bedroom. The location is perfect for families, close to Central Park and the Natural History Museum. Want to see more details?",
+    eff: (s) => ({ ...s, current: "p1" }),
   },
 ];
 
@@ -719,10 +1081,13 @@ export default function PabloDemoLoop() {
     compare: false,
     iti: false,
     extras: false,
-    location: "featured"
+    location: "featured",
+    showAuthPopup: false,
+    isPersonalized: false
   });
   const [isLoading, setIsLoading] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showPersonalizing, setShowPersonalizing] = useState(false);
 
   // Demo controls state
   const [isPlaying, setIsPlaying] = useState(true);
@@ -818,7 +1183,7 @@ export default function PabloDemoLoop() {
     const messagesToShow = SCRIPT.slice(0, index + 1);
     const newMsgs = messagesToShow.map(s => ({ from: s.from, text: s.text }));
 
-    let newState: DemoState = { current: null, compare: false, iti: false, extras: false, location: "featured" };
+    let newState: DemoState = { current: null, compare: false, iti: false, extras: false, location: "featured", showAuthPopup: false, isPersonalized: false };
     messagesToShow.forEach(s => {
       if (s.eff) newState = s.eff(newState);
     });
@@ -847,7 +1212,7 @@ export default function PabloDemoLoop() {
   const reset = () => {
     setMsgs([]);
     setCurrentMsgIndex(0);
-    setState({ current: null, compare: false, iti: false, extras: false, location: "featured" });
+    setState({ current: null, compare: false, iti: false, extras: false, location: "featured", showAuthPopup: false, isPersonalized: false });
     setTyping(false);
     setIsTypingMessage(false);
     setIsPlaying(true);
@@ -855,7 +1220,9 @@ export default function PabloDemoLoop() {
   };
 
   const renderProperties = () => {
-    if (state.compare) {
+    const propsToUse = state.isPersonalized ? PERSONALIZED_PROPS : GENERIC_PROPS;
+    
+    if (state.isPersonalized && state.compare) {
       return (
         <motion.div
           initial={{ opacity: 0 }}
@@ -863,14 +1230,31 @@ export default function PabloDemoLoop() {
           transition={{ duration: 0.5 }}
           className="grid gap-6 md:grid-cols-2"
         >
-          <PropertyCard p={PROPS.p1} isLoading={isLoading} />
-          <PropertyCard p={PROPS.p2} isLoading={isLoading} />
+          <PropertyCard p={PERSONALIZED_PROPS.p1} isLoading={isLoading} />
+          <PropertyCard p={PERSONALIZED_PROPS.p2} isLoading={isLoading} />
         </motion.div>
       );
     }
-    if (state.current) {
-      return <PropertyCard p={PROPS[state.current]} isLoading={isLoading} />;
+    
+    if (state.isPersonalized && state.current) {
+      return <PropertyCard p={PERSONALIZED_PROPS[state.current]} isLoading={isLoading} />;
     }
+    
+    // Show generic properties initially
+    if (!state.isPersonalized) {
+      return (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="grid gap-6 md:grid-cols-2"
+        >
+          <PropertyCard p={GENERIC_PROPS.generic1} isLoading={isLoading} />
+          <PropertyCard p={GENERIC_PROPS.generic2} isLoading={isLoading} />
+        </motion.div>
+      );
+    }
+    
     return null;
   };
 
@@ -929,6 +1313,21 @@ export default function PabloDemoLoop() {
     };
   }, [msgs, typing, isTypingMessage]);
 
+  // Handle authorization
+  const handleAuthorize = () => {
+    setState(s => ({ ...s, showAuthPopup: false }));
+    setShowPersonalizing(true);
+    
+    // Simulate loading and then continue conversation
+    setTimeout(() => {
+      setShowPersonalizing(false);
+      // Continue with next message
+      if (currentMsgIndex < SCRIPT.length - 1) {
+        setCurrentMsgIndex(currentMsgIndex + 1);
+      }
+    }, 3000);
+  };
+
   /*************** RENDER ***************/
   return (
     <motion.div
@@ -937,6 +1336,16 @@ export default function PabloDemoLoop() {
       className="min-h-screen bg-[#F5F1ED]"
     >
       <DashboardMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
+      {/* Add Auth Popup */}
+      <SocialAuthPopup 
+        show={state.showAuthPopup} 
+        onClose={() => setState(s => ({ ...s, showAuthPopup: false }))}
+        onAuthorize={handleAuthorize}
+      />
+      
+      {/* Add Personalizing Loader */}
+      <PersonalizingLoader show={showPersonalizing} />
 
       {/* Add Notifications */}
       <ProcessingNotification show={showPaymentProcessed} />
@@ -971,15 +1380,12 @@ export default function PabloDemoLoop() {
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Add test button */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={testNotifications}
-              className="mr-2"
-            >
-              Test Notifications
-            </Button>
+            {state.isPersonalized && (
+              <Badge variant="secondary" className="bg-green-100 text-green-800">
+                <Sparkles className="w-3 h-3 mr-1" />
+                Personalized for You
+              </Badge>
+            )}
             <Badge variant="outline" className="text-sm">
               {state.location === "new-york" ? "📍 New York" : "🌎 Featured Destinations"}
             </Badge>
@@ -1000,12 +1406,14 @@ export default function PabloDemoLoop() {
             <div className="relative h-full flex items-center justify-center text-white p-8 text-center">
               <div>
                 <h2 className="text-3xl font-light mb-2">
-                  {state.location === "new-york" ? "Exploring New York" : "Where will Pablo take you?"}
+                  {state.isPersonalized 
+                    ? (state.location === "new-york" ? "Your Perfect NYC Family Adventure" : "Curated Just for You")
+                    : "Discover Amazing Destinations"}
                 </h2>
                 <p className="text-lg opacity-90">
-                  {state.location === "new-york"
-                    ? "Perfect stays for the Kaushan family adventure"
-                    : "AI-powered travel planning that knows you"}
+                  {state.isPersonalized
+                    ? "Personalized recommendations based on your interests"
+                    : "AI-powered travel planning that learns what you love"}
                 </p>
               </div>
             </div>
