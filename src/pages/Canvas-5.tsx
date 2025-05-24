@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Play, Pause, Volume2, VolumeX, MapPin, Wifi, Coffee,
@@ -14,7 +14,6 @@ import {
   Inbox, Image as ImageIcon, User, Edit, Star, Heart,
   Bookmark, TrendingUp, Calendar, ChevronRight, CreditCard,
   CheckCircle2, Instagram, Facebook, Twitter, Sparkles, Lock,
-  Send, Mail, Phone, Building2
 } from "lucide-react";
 
 const DemoControls = ({
@@ -811,233 +810,233 @@ const PersonalizingLoader = ({ show }: { show: boolean }) => (
 );
 
 // Add Demo Request Popup component
-const DemoRequestPopup = ({ 
-  show, 
-  onClose, 
-  onSubmit, 
-  initialMessage 
-}: { 
-  show: boolean; 
-  onClose: () => void; 
-  onSubmit: (data: any) => void;
-  initialMessage: string;
-}) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    message: initialMessage
-  });
+// const DemoRequestPopup = ({ 
+//   show, 
+//   onClose, 
+//   onSubmit, 
+//   initialMessage 
+// }: { 
+//   show: boolean; 
+//   onClose: () => void; 
+//   onSubmit: (data: any) => void;
+//   initialMessage: string;
+// }) => {
+//   const [formData, setFormData] = useState({
+//     name: '',
+//     email: '',
+//     phone: '',
+//     company: '',
+//     message: initialMessage
+//   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-    onClose();
-  };
+//   const handleSubmit = (e: React.FormEvent) => {
+//     e.preventDefault();
+//     onSubmit(formData);
+//     onClose();
+//   };
 
-  return (
-    <AnimatePresence>
-      {show && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
-            onClick={onClose}
-          />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-8 z-50 w-[500px] max-h-[90vh] overflow-y-auto"
-          >
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-[#F5F1ED] rounded-full flex items-center justify-center mx-auto mb-4">
-                <MessageSquare className="w-8 h-8 text-[#7e6441]" />
-              </div>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-2">Request a Demo</h2>
-              <p className="text-gray-600">Let's set up a personalized demo to show you how Pablo can transform your travel experience</p>
-            </div>
+//   return (
+//     <AnimatePresence>
+//       {show && (
+//         <>
+//           <motion.div
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             exit={{ opacity: 0 }}
+//             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+//             onClick={onClose}
+//           />
+//           <motion.div
+//             initial={{ opacity: 0, scale: 0.9 }}
+//             animate={{ opacity: 1, scale: 1 }}
+//             exit={{ opacity: 0, scale: 0.9 }}
+//             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-8 z-50 w-[500px] max-h-[90vh] overflow-y-auto"
+//           >
+//             <div className="text-center mb-6">
+//               <div className="w-16 h-16 bg-[#F5F1ED] rounded-full flex items-center justify-center mx-auto mb-4">
+//                 <MessageSquare className="w-8 h-8 text-[#7e6441]" />
+//               </div>
+//               <h2 className="text-2xl font-semibold text-gray-900 mb-2">Request a Demo</h2>
+//               <p className="text-gray-600">Let's set up a personalized demo to show you how Pablo can transform your travel experience</p>
+//             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Full Name *
-                </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    required
-                    placeholder="John Doe"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
+//             <form onSubmit={handleSubmit} className="space-y-4">
+//               <div>
+//                 <label className="block text-sm font-medium text-gray-700 mb-1">
+//                   Full Name *
+//                 </label>
+//                 <div className="relative">
+//                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+//                   <Input
+//                     required
+//                     placeholder="John Doe"
+//                     value={formData.name}
+//                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+//                     className="pl-10"
+//                   />
+//                 </div>
+//               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email Address *
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    required
-                    type="email"
-                    placeholder="john@example.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
+//               <div>
+//                 <label className="block text-sm font-medium text-gray-700 mb-1">
+//                   Email Address *
+//                 </label>
+//                 <div className="relative">
+//                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+//                   <Input
+//                     required
+//                     type="email"
+//                     placeholder="john@example.com"
+//                     value={formData.email}
+//                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+//                     className="pl-10"
+//                   />
+//                 </div>
+//               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone Number
-                </label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    type="tel"
-                    placeholder="+1 (555) 123-4567"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
+//               <div>
+//                 <label className="block text-sm font-medium text-gray-700 mb-1">
+//                   Phone Number
+//                 </label>
+//                 <div className="relative">
+//                   <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+//                   <Input
+//                     type="tel"
+//                     placeholder="+1 (555) 123-4567"
+//                     value={formData.phone}
+//                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+//                     className="pl-10"
+//                   />
+//                 </div>
+//               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Company
-                </label>
-                <div className="relative">
-                  <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    placeholder="Your Company"
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
+//               <div>
+//                 <label className="block text-sm font-medium text-gray-700 mb-1">
+//                   Company
+//                 </label>
+//                 <div className="relative">
+//                   <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+//                   <Input
+//                     placeholder="Your Company"
+//                     value={formData.company}
+//                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+//                     className="pl-10"
+//                   />
+//                 </div>
+//               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Your Message
-                </label>
-                <Input
-                  placeholder="Tell us about your travel needs..."
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="resize-none"
-                />
-              </div>
+//               <div>
+//                 <label className="block text-sm font-medium text-gray-700 mb-1">
+//                   Your Message
+//                 </label>
+//                 <Input
+//                   placeholder="Tell us about your travel needs..."
+//                   value={formData.message}
+//                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+//                   className="resize-none"
+//                 />
+//               </div>
 
-              <div className="flex items-center gap-2 p-4 bg-green-50 rounded-lg">
-                <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
-                <p className="text-sm text-green-800">We'll contact you within 24 hours to schedule your demo</p>
-              </div>
+//               <div className="flex items-center gap-2 p-4 bg-green-50 rounded-lg">
+//                 <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
+//                 <p className="text-sm text-green-800">We'll contact you within 24 hours to schedule your demo</p>
+//               </div>
 
-              <div className="flex gap-3 pt-4">
-                <Button type="button" variant="outline" onClick={onClose} className="flex-1">
-                  Cancel
-                </Button>
-                <Button type="submit" className="flex-1 bg-[#7e6441] hover:bg-[#6a5637]">
-                  <Send className="w-4 h-4 mr-2" />
-                  Request Demo
-                </Button>
-              </div>
-            </form>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
-  );
-};
+//               <div className="flex gap-3 pt-4">
+//                 <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+//                   Cancel
+//                 </Button>
+//                 <Button type="submit" className="flex-1 bg-[#7e6441] hover:bg-[#6a5637]">
+//                   <Send className="w-4 h-4 mr-2" />
+//                   Request Demo
+//                 </Button>
+//               </div>
+//             </form>
+//           </motion.div>
+//         </>
+//       )}
+//     </AnimatePresence>
+//   );
+// };
 
 // Add Customer Input Section component
-const CustomerInputSection = ({ onRequestDemo }: { onRequestDemo: (message: string) => void }) => {
-  const [message, setMessage] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
+// const CustomerInputSection = ({ onRequestDemo }: { onRequestDemo: (message: string) => void }) => {
+//   const [message, setMessage] = useState('');
+//   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSubmit = () => {
-    if (message.trim()) {
-      onRequestDemo(message);
-    }
-  };
+//   const handleSubmit = () => {
+//     if (message.trim()) {
+//       onRequestDemo(message);
+//     }
+//   };
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl shadow-lg p-8 mb-8"
-    >
-      <div className="text-center mb-6">
-        <h3 className="text-2xl font-semibold text-gray-900 mb-2">
-          Tell Us About Your Travel Dreams
-        </h3>
-        <p className="text-gray-600">
-          Share what kind of experiences you're looking for, and let's create something amazing together
-        </p>
-      </div>
+//   return (
+//     <motion.div
+//       initial={{ opacity: 0, y: 20 }}
+//       animate={{ opacity: 1, y: 0 }}
+//       className="bg-white rounded-2xl shadow-lg p-8 mb-8"
+//     >
+//       <div className="text-center mb-6">
+//         <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+//           Tell Us About Your Travel Dreams
+//         </h3>
+//         <p className="text-gray-600">
+//           Share what kind of experiences you're looking for, and let's create something amazing together
+//         </p>
+//       </div>
 
-      <div className="space-y-4">
-        <Input
-          placeholder="I'm looking for family-friendly destinations with activities for kids..."
-          value={message}
-          onChange={(e) => {
-            setMessage(e.target.value);
-            setIsTyping(true);
-            setTimeout(() => setIsTyping(false), 1000);
-          }}
-          className="resize-none text-lg"
-        />
+//       <div className="space-y-4">
+//         <Input
+//           placeholder="I'm looking for family-friendly destinations with activities for kids..."
+//           value={message}
+//           onChange={(e) => {
+//             setMessage(e.target.value);
+//             setIsTyping(true);
+//             setTimeout(() => setIsTyping(false), 1000);
+//           }}
+//           className="resize-none text-lg"
+//         />
 
-        <div className="flex items-center justify-between">
-          <AnimatePresence>
-            {isTyping && (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-sm text-gray-500"
-              >
-                Pablo is listening...
-              </motion.p>
-            )}
-          </AnimatePresence>
+//         <div className="flex items-center justify-between">
+//           <AnimatePresence>
+//             {isTyping && (
+//               <motion.p
+//                 initial={{ opacity: 0 }}
+//                 animate={{ opacity: 1 }}
+//                 exit={{ opacity: 0 }}
+//                 className="text-sm text-gray-500"
+//               >
+//                 Pablo is listening...
+//               </motion.p>
+//             )}
+//           </AnimatePresence>
 
-          <Button
-            onClick={handleSubmit}
-            disabled={!message.trim()}
-            className="ml-auto bg-[#7e6441] hover:bg-[#6a5637] disabled:opacity-50"
-          >
-            <MessageSquare className="w-4 h-4 mr-2" />
-            Request Personalized Demo
-          </Button>
-        </div>
-      </div>
+//           <Button
+//             onClick={handleSubmit}
+//             disabled={!message.trim()}
+//             className="ml-auto bg-[#7e6441] hover:bg-[#6a5637] disabled:opacity-50"
+//           >
+//             <MessageSquare className="w-4 h-4 mr-2" />
+//             Request Personalized Demo
+//           </Button>
+//         </div>
+//       </div>
 
-      {message.trim() && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          className="mt-4 p-4 bg-[#F5F1ED] rounded-lg"
-        >
-          <p className="text-sm text-[#7e6441]">
-            <Sparkles className="w-4 h-4 inline mr-1" />
-            Great! Click the button above to get your personalized demo based on your interests.
-          </p>
-        </motion.div>
-      )}
-    </motion.div>
-  );
-};
+//       {message.trim() && (
+//         <motion.div
+//           initial={{ opacity: 0, height: 0 }}
+//           animate={{ opacity: 1, height: 'auto' }}
+//           className="mt-4 p-4 bg-[#F5F1ED] rounded-lg"
+//         >
+//           <p className="text-sm text-[#7e6441]">
+//             <Sparkles className="w-4 h-4 inline mr-1" />
+//             Great! Click the button above to get your personalized demo based on your interests.
+//           </p>
+//         </motion.div>
+//       )}
+//     </motion.div>
+//   );
+// };
 
 /**************** SCRIPT ****************/
 const SCRIPT: { from: "pablo" | "user"; text: string; eff?: (s: DemoState) => DemoState }[] = [
@@ -1220,7 +1219,7 @@ export default function PabloDemoLoop() {
   };
 
   const renderProperties = () => {
-    const propsToUse = state.isPersonalized ? PERSONALIZED_PROPS : GENERIC_PROPS;
+    // const propsToUse = state.isPersonalized ? PERSONALIZED_PROPS : GENERIC_PROPS;
     
     if (state.isPersonalized && state.compare) {
       return (
@@ -1275,16 +1274,16 @@ export default function PabloDemoLoop() {
   }, [state.location]);
 
   // Add test function
-  const testNotifications = () => {
-    setShowPaymentProcessed(true);
-    setTimeout(() => {
-      setShowPaymentProcessed(false);
-      setTimeout(() => {
-        setShowBookingConfirmed(true);
-        setTimeout(() => setShowBookingConfirmed(false), 4000);
-      }, 500);
-    }, 2000);
-  };
+//   const testNotifications = () => {
+//     setShowPaymentProcessed(true);
+//     setTimeout(() => {
+//       setShowPaymentProcessed(false);
+//       setTimeout(() => {
+//         setShowBookingConfirmed(true);
+//         setTimeout(() => setShowBookingConfirmed(false), 4000);
+//       }, 500);
+//     }, 2000);
+//   };
 
   // Update the useEffect for scrolling
   useEffect(() => {
