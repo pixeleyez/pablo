@@ -675,35 +675,35 @@ const PaymentNotification = ({ show }: { show: boolean }) => (
 const SCRIPT: { from: "pablo" | "user"; text: string; eff?: (s: DemoState) => DemoState }[] = [
   {
     from: "pablo",
-    text: "Hey Super Dad! I've been thinking about your crew – how are my favorite munchkins doing? They're now 1, 7, 10, 12, 13 if I'm correct? Budget still < $800? Check out this 4‑BDR UWS apt – $789/night – has the gaming corner your big boys loved in Palm Beach resort plus a beautiful view from the master bedroom (remember last summer, the balcony over the Seine?) – check the video!",
+    text: "Hey Marina! How are the kids - 2, 8, 11, 13, 14? Still under $750 budget? Found a perfect 4-bedroom in Midtown for $729/night with city views!",
     eff: (s) => ({ ...s, current: "p1", location: "new-york" }),
   },
   { from: "user", text: "any food place (bakery etc) close by?" },
   {
     from: "pablo",
-    text: "Oh Slavik, I've got your back! Remember how smoothly we handled Disney in France last year? NYC will be a breeze! Here, check this one – THE PERFECT place closer to Broadway, also on the UWS, honestly feels made for the Kaushan family! Just a bit over budget at $870 – too steep? It's peak season in the Big Apple; we'd need to move downtown for more availability if you don't like either, but I'd advise against shlepping the kids on the train… UWS is my preference knowing you guys – thoughts?",
+    text: "Got you covered! Here's another option closer to Times Square - $825/night. A bit over budget but amazing location. Midtown is perfect for your family - thoughts?",
     eff: (s) => ({ ...s, current: "p2" }),
   },
   { from: "user", text: "compare them" },
   {
     from: "pablo",
-    text: "First one gives you a view of Central Park but food places are a 5‑min walk; the other has no park view but coffee/bakeries super close. Olga still loves her morning green juice? Get this – not only full kitchen with a cold‑press juicer but also a Juice Press store downstairs! Great bakery next door and a 5‑min walk to some amazing restaurants (Daniel Boulud etc.). All boys can fit in one room with bunk beds, Gracie on her own like a proper princess, and a crib for Sophie in your bedroom as requested!",
+    text: "First one: Bryant Park views, 7-min walk to restaurants. Second: no park view but cafes downstairs, Smoothie King in lobby. All kids fit comfortably in both!",
     eff: (s) => ({ ...s, compare: true }),
   },
   { from: "user", text: "no flights yet, are dates flexible? Book 2nd option for now, need flexibility w/ dates/cancel; also, need activities w/kids" },
   {
     from: "pablo",
-    text: "Okay! ",
+    text: "Perfect! ",
     eff: (s) => ({ ...s, iti: true }),
   },
   {
     from: "pablo",
-    text: "Booking = done! Give me a few minutes to amaze you – sending confirmation email. Day 1: Traffic could be heavier on Friday, plan extra 20‑30 min to get to UWS. Check‑in at 3 pm but you can leave luggage with the doorman; walk 3 min to INCREDIBLE place 'Family Kitchen' toward Broadway, known for GF pizza; sunny & warm forecast – best friend = Central Park playground right after. Remember the scavenger hunt I made at the local park? I've created a special Central Park version! It takes you past Belvedere Castle (Gracie can pretend she's a princess again), the Alice in Wonderland statue (perfect for those family photos Olga loves), and the zoo (they've got new red pandas!). Then walk to Columbus Circle; Wholefoods downstairs to stock the fridge. Dinner – finger‑food lounge 'Mo Lounge' with the best Central Park view, known for cocktails!",
+    text: "Booked! Day 1: Check-in 4pm, visit Urban Bites for lunch, then Bryant Park carousel. I've made a treasure hunt for the kids! Dinner at Skyline Terrace with city views.",
     eff: (s) => ({ ...s, iti: true }),
   },
   {
     from: "pablo",
-    text: "I have a special suggestion for your big girls, but the boys may like it too: a behind‑the‑scenes Broadway workshop in the morning – they learn a dance number! I know the instructor; she's amazing with kids of different energy levels (90 min). Alternatively, tickets available for Lion King (wife's bucket‑list 😉) – min age 4; if you split with Sophie and some boys, there's a tech exhibit 3 blocks from the theatre the boys would love. For dinner, incredible Italian near the apartment – they make GF pasta (spaghetti carbonara a hit). Best part? Private room where kids can be loud, and they let kids make their own cannoli for dessert – GF ones too! Should I try to get a reservation?",
+    text: "Day 2: Morning bagel-making class for all kids (2 hours) OR Hamilton tickets for older ones + science museum for younger. Dinner: Mexican place with GF options, kids make churros! Should I book?",
     eff: (s) => ({ ...s, extras: true }),
   },
 ];
@@ -773,7 +773,7 @@ export default function PabloDemoLoop() {
         setIsTypingMessage(true);
 
         // Show notifications based on message content
-        if (step.text.startsWith("Booking = done!")) {
+        if (step.text.startsWith("Booked!")) {
           // First show payment processing
           setShowPaymentProcessed(true);
           setTimeout(() => {
