@@ -15,6 +15,11 @@ import {
   Bookmark, TrendingUp, Calendar, ChevronRight, CreditCard,
   CheckCircle2
 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { MessageSquareHeart, Users, Camera, Sparkles } from "lucide-react";
 
 const DemoControls = ({
   isPlaying,
@@ -957,8 +962,10 @@ export default function PabloDemoLoop() {
     };
   }, [msgs, typing, isTypingMessage]);
 
+  const [post, setPost] = useState("");
   /*************** RENDER ***************/
   return (
+    <>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -1180,5 +1187,104 @@ export default function PabloDemoLoop() {
         totalSteps={SCRIPT.length}
       />
     </motion.div>
+    <div className="grid grid-cols-1 md:grid-cols-1 bg-[#f7f4f1] font-serif text-[#333]">
+        {/* bottom div code */}
+        <div className="p-6 space-y-6">
+          <Tabs defaultValue="feed">
+            <TabsList className="grid grid-cols-4 w-full">
+              <TabsTrigger value="feed">
+                <MessageSquareHeart className="mr-2 h-4 w-4" /> Feed
+              </TabsTrigger>
+              <TabsTrigger value="groups">
+                <Users className="mr-2 h-4 w-4" /> Groups
+              </TabsTrigger>
+              <TabsTrigger value="create">
+                <Camera className="mr-2 h-4 w-4" /> Create Post
+              </TabsTrigger>
+              <TabsTrigger value="explore">
+                <Sparkles className="mr-2 h-4 w-4" /> Discover
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="feed">
+              <div className="space-y-4">
+                <Card>
+                  <CardContent className="p-4 flex gap-4 items-start">
+                    <Avatar>
+                      <AvatarImage src="/avatars/user1.jpg" />
+                      <AvatarFallback>JD</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-semibold">Jane Doe</p>
+                      <p className="text-sm">"Just got back from Portugal. Here are my fav vegan spots in Lisbon!"</p>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4 flex gap-4 items-start">
+                    <Avatar>
+                      <AvatarImage src="/avatars/user2.jpg" />
+                      <AvatarFallback>MR</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-semibold">Mark R.</p>
+                      <p className="text-sm">"Backpacking across the Balkans? Ask me anything!"</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="groups">
+              <div className="space-y-4">
+                <Card>
+                  <CardContent className="p-4">
+                    <p className="font-semibold text-lg">🌱 Vegan Travelers</p>
+                    <p className="text-sm text-muted-foreground">Share plant-based finds from around the globe.</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4">
+                    <p className="font-semibold text-lg">🎒 Digital Nomads Europe</p>
+                    <p className="text-sm text-muted-foreground">Tips, meetups, and work-friendly stays across Europe.</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="create">
+              <Card>
+                <CardContent className="p-4 space-y-4">
+                  <Textarea
+                    placeholder="Share your travel story, tip or review..."
+                    value={post}
+                    onChange={(e) => setPost(e.target.value)}
+                  />
+                  <Input type="file" />
+                  <Button disabled={!post}>Post</Button>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="explore">
+              <div className="grid gap-4">
+                <Card>
+                  <CardContent className="p-4">
+                    <p className="font-semibold text-lg">Suggested for You</p>
+                    <p className="text-sm">Based on your profile: "Eco Stays in Croatia"</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="p-4">
+                    <p className="font-semibold text-lg">From Your Groups</p>
+                    <p className="text-sm">"Best work cafés in Lisbon" — Digital Nomads Europe</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+    </>
   );
 }
