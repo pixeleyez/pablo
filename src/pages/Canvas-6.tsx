@@ -236,7 +236,7 @@ export default function PabloMVPChat() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-1 min-h-screen bg-[#f7f4f1] font-serif text-[#333]">
+      <div className="grid grid-cols-1 md:grid-cols-1 bg-[#f7f4f1] font-serif text-[#333]">
         {/* bottom div code */}
         <div className="p-6 space-y-6">
           <Tabs defaultValue="feed">
