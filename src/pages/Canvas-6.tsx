@@ -43,7 +43,7 @@ const DemoControls = ({
   totalSteps: number;
 }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: 0 }}
     animate={{ opacity: 1, y: 0 }}
     className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white rounded-full shadow-lg px-6 py-3 flex items-center gap-4 z-50 border border-gray-200"
   >
@@ -362,8 +362,8 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
                   key={i}
                   onClick={() => setCurrentImage(i)}
                   className={`transition-all ${i === currentImage
-                      ? "w-8 h-2 bg-white"
-                      : "w-2 h-2 bg-white/60 hover:bg-white/80"
+                    ? "w-8 h-2 bg-white"
+                    : "w-2 h-2 bg-white/60 hover:bg-white/80"
                     } rounded-full`}
                 />
               ))}
@@ -542,31 +542,28 @@ const TypeBubble = ({
   }, [msg.text, onDone, shouldType, speed, msg.from]);
 
   const handleClick = () => {
-    setIsHighlighted(true);
-    bubbleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => setIsHighlighted(false), 1500);
+    // setIsHighlighted(true);
+    // bubbleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // setTimeout(() => setIsHighlighted(false), 1500);
   };
 
   return (
     <motion.div
       // ref={bubbleRef}
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 0 }}
       animate={{ opacity: 1, y: 0 }}
       className={`mb-6 flex items-end gap-3 ${msg.from === "pablo" ? "" : "flex-row-reverse"}`}
       onClick={handleClick}
     >
-      {msg.from === "pablo" ? (        <div className="size-12 rounded-full overflow-hidden flex-shrink-0 bg-[#F5F1ED]">          <img             src="/images/pablo-logo.svg"             alt="Pablo"             className="w-full h-full object-contain p-2"            onError={(e) => {              e.currentTarget.style.display = 'none';              e.currentTarget.parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center text-[#7e6441] text-lg font-semibold">P</div>';            }}          />        </div>      ) : (        <UserAvatar className="w-8 h-8" />      )}
-      <div
-        className={`relative max-w-[80%] rounded-[15px] px-4 py-3 text-[15px] cursor-pointer transition-all duration-300 ${
-          msg.from === "pablo"
-            ? "bg-[#f5f1ed] text-[#2D2D2D] rounded-bl-none shadow-sm"
-            : "bg-[#4B4B4B] text-white rounded-br-none"
-        } ${
-          isHighlighted 
-            ? msg.from === "pablo" 
-              ? "ring-2 ring-[#7e6441] ring-opacity-50" 
-              : "ring-2 ring-[#4B4B4B] ring-opacity-50"
-            : ""
+      {msg.from === "pablo" ? (<div className="size-12 rounded-full overflow-hidden flex-shrink-0 bg-[#F5F1ED]"><img src="/images/pablo-logo.svg" alt="Pablo" className="w-full h-full object-contain p-2" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center text-[#7e6441] text-lg font-semibold">P</div>'; }} />        </div>) : (<UserAvatar className="w-8 h-8" />)}
+      <div className={`relative max-w-[80%] rounded-[15px] px-4 py-3 text-[15px] cursor-pointer transition-all duration-300 ${msg.from === "pablo"
+        ? "bg-[#f5f1ed] text-[#2D2D2D] rounded-bl-none shadow-sm"
+        : "bg-[#4B4B4B] text-white rounded-br-none"
+        } ${isHighlighted
+          ? msg.from === "pablo"
+            ? "ring-2 ring-[#7e6441] ring-opacity-50"
+            : "ring-2 ring-[#4B4B4B] ring-opacity-50"
+          : ""
         }`}
       >
         {txt || "\u00A0"}
@@ -575,35 +572,35 @@ const TypeBubble = ({
   );
 };
 
-// const PabloTypingIndicator = () => (
-//   <motion.div
-//     initial={{ opacity: 0, y: 10 }}
-//     animate={{ opacity: 1, y: 0 }}
-//     exit={{ opacity: 0, y: -10 }}
-//     className="mb-6 flex items-start gap-3"
-//   >
-//     <div className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-3 shadow-sm">
-//       <span className="text-[#666666]">Pablo is thinking</span>
-//       <div className="flex gap-1">
-//         <motion.div
-//           animate={{ y: [0, -3, 0] }}
-//           transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-//           className="w-1.5 h-1.5 bg-[#666666] rounded-full"
-//         />
-//         <motion.div
-//           animate={{ y: [0, -3, 0] }}
-//           transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-//           className="w-1.5 h-1.5 bg-[#666666] rounded-full"
-//         />
-//         <motion.div
-//           animate={{ y: [0, -3, 0] }}
-//           transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-//           className="w-1.5 h-1.5 bg-[#666666] rounded-full"
-//         />
-//       </div>
-//     </div>
-//   </motion.div>
-// );
+const PabloTypingIndicator = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -10 }}
+    className="mb-6 flex items-start gap-3"
+  >
+    <div className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-3 shadow-sm">
+      <span className="text-[#666666]">Pablo is thinking</span>
+      <div className="flex gap-1">
+        <motion.div
+          animate={{ y: [0, -3, 0] }}
+          transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+          className="w-1.5 h-1.5 bg-[#666666] rounded-full"
+        />
+        <motion.div
+          animate={{ y: [0, -3, 0] }}
+          transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+          className="w-1.5 h-1.5 bg-[#666666] rounded-full"
+        />
+        <motion.div
+          animate={{ y: [0, -3, 0] }}
+          transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+          className="w-1.5 h-1.5 bg-[#666666] rounded-full"
+        />
+      </div>
+    </div>
+  </motion.div>
+);
 
 // Update the ProcessingNotification for better visibility
 const ProcessingNotification = ({ show }: { show: boolean }) => (
@@ -750,7 +747,7 @@ export default function PabloDemoLoop() {
 
   // Auto-scroll to bottom
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [msgs, typing]);
 
   // Play sound effect
@@ -862,15 +859,10 @@ export default function PabloDemoLoop() {
   const renderProperties = () => {
     if (state.compare) {
       return (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="grid gap-6 md:grid-cols-2"
-        >
+        <div className="grid gap-6 md:grid-cols-2">
           <PropertyCard p={PROPS.p1} isLoading={isLoading} />
           <PropertyCard p={PROPS.p2} isLoading={isLoading} />
-        </motion.div>
+        </div>
       );
     }
     if (state.current) {
@@ -924,7 +916,7 @@ export default function PabloDemoLoop() {
     // Set up an interval to keep scrolling while typing
     let scrollInterval: number | null = null;
     if (typing || isTypingMessage) {
-      scrollInterval = setInterval(scrollToBottom, 100);
+      scrollInterval = setInterval(scrollToBottom, 300);
     }
 
     return () => {
@@ -938,228 +930,224 @@ export default function PabloDemoLoop() {
   /*************** RENDER ***************/
   return (
     <>
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="min-h-screen bg-[#F5F1ED]"
-    >
-      <DashboardMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      <div className="min-h-screen bg-[#F5F1ED]">
+        <DashboardMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      {/* Add Notifications */}
-      <ProcessingNotification show={showPaymentProcessed} />
-      <PaymentNotification show={showBookingConfirmed} />
+        {/* Add Notifications */}
+        <ProcessingNotification show={showPaymentProcessed} />
+        <PaymentNotification show={showBookingConfirmed} />
 
-      {/* Header */}
-      <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md shadow-sm">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setMenuOpen(true)}
-              className="hover:bg-[#7e6441] -ml-3"
-            >
-              <Menu className="w-5 h-5" />
-            </Button>
-
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10">
-                <img
-                  src="/images/pablo-logo.svg"
-                  alt="Pablo"
-                  className="w-full h-full"
-                />
-              </div>
-              <div className="flex items-baseline">
-                <span className="text-2xl font-semibold tracking-tight text-gray-900">Pablo</span>
-                <span className="text-lg text-gray-500 ml-1">Travel</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            {/* Add test button */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={testNotifications}
-              className="mr-2"
-            >
-              Test Notifications
-            </Button>
-            <Badge variant="outline" className="text-sm">
-              {state.location === "new-york" ? "📍 New York" : "🌎 Featured Destinations"}
-            </Badge>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* LEFT COLUMN - Dynamic Content */}
-        <section className="lg:col-span-2 space-y-8">
-          {/* Hero Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="relative rounded-3xl overflow-hidden h-64 bg-[#7e6441]"
-          >
-            <div className="absolute inset-0 bg-black/20" />
-            <div className="relative h-full flex items-center justify-center text-white p-8 text-center">
-              <div>
-                <h2 className="text-3xl font-light mb-2">
-                  {state.location === "new-york" ? "Exploring New York" : "Where will Pablo take you?"}
-                </h2>
-                <p className="text-lg opacity-90">
-                  {state.location === "new-york"
-                    ? "Perfect stays for the Kaushan family adventure"
-                    : "AI-powered travel planning that knows you"}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Properties Section */}
-          <AnimatePresence mode="wait">
-            {renderProperties()}
-          </AnimatePresence>
-
-          {/* Influencers Grid */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-medium text-gray-900 mb-6">Local Experts</h2>
-            <div className="space-y-3">
-              {INFLUENCERS.map((influencer) => (
-                <InfluencerCard key={influencer.id} influencer={influencer} />
-              ))}
-            </div>
-          </div>
-
-          {/* Articles Grid */}
-          <div>
-            <h2 className="text-2xl font-medium text-gray-900 mb-6">Travel Stories</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {ARTICLES.map((article) => (
-                <ArticleCard key={article.id} article={article} />
-              ))}
-            </div>
-          </div>
-
-          {/* Itinerary Section */}
-          <AnimatePresence>
-            {state.iti && (
-              <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className=" bg-white rounded-2xl p-8 shadow-lg"
+        {/* Header */}
+        <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md shadow-sm">
+          <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setMenuOpen(true)}
+                className="hover:bg-[#7e6441] -ml-3"
               >
-                <h3 className="text-2xl font-semibold mb-6 text-gray-900">Day 1 – Arrival & Park Fun</h3>
-                <div className="space-y-3">
-                  {[
-                    "Extra 20‑30 min for Friday traffic",
-                    "Drop bags with doorman (check‑in 3 pm)",
-                    "Lunch: Family Kitchen (GF pizza)",
-                    "Central Park scavenger hunt → zoo (red pandas!)",
-                    "Wholefoods Columbus Circle – stock fridge",
-                    "Dinner: Mo Lounge – park‑view cocktails",
-                  ].map((item, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="flex items-start gap-3"
-                    >
-                      <div className="w-6 h-6 rounded-full  bg-[#f5f1ed] flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-xs font-semibold text-[#7e6441]">{i + 1}</span>
-                      </div>
-                      <p className="text-gray-700">{item}</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.section>
-            )}
-          </AnimatePresence>
+                <Menu className="w-5 h-5" />
+              </Button>
 
-          {/* Extra Activities */}
-          <AnimatePresence>
-            {state.extras && (
-              <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-8 shadow-lg"
-              >
-                <h3 className="text-2xl font-semibold mb-6 text-green-900">Special Experiences</h3>
-                <div className="grid gap-4 md:grid-cols-2">
-                  <Card className="p-6 hover:shadow-md transition-shadow">
-                    <h4 className="font-semibold text-lg mb-2">Broadway Workshop</h4>
-                    <p className="text-gray-600 text-sm">Behind-the-scenes dance class for kids (90 min)</p>
-                  </Card>
-                  <Card className="p-6 hover:shadow-md transition-shadow">
-                    <h4 className="font-semibold text-lg mb-2">Lion King + Tech Exhibit</h4>
-                    <p className="text-gray-600 text-sm">Split the family for age-appropriate fun</p>
-                  </Card>
-                  <Card className="p-6 hover:shadow-md transition-shadow md:col-span-2">
-                    <h4 className="font-semibold text-lg mb-2">Italian Family Dinner</h4>
-                    <p className="text-gray-600 text-sm">Private room, GF pasta, kids make their own cannoli!</p>
-                  </Card>
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10">
+                  <img
+                    src="/images/pablo-logo.svg"
+                    alt="Pablo"
+                    className="w-full h-full"
+                  />
                 </div>
-              </motion.section>
-            )}
-          </AnimatePresence>
-        </section>
-
-        {/* CHAT COLUMN */}
-        <aside className="lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
-          <Card className="h-full shadow-xl rounded-2xl overflow-hidden">
-            <div className="bg-[#7e6441] text-white p-4">              <div className="flex items-center gap-3">                <div className="w-10 h-10 rounded-full overflow-hidden bg-white/20">                  <img                     src="/images/pablo-logo.svg"                     alt="Pablo"                     className="w-full h-full object-contain p-1.5"                    onError={(e) => {                      e.currentTarget.style.display = 'none';                      e.currentTarget.parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center text-white text-sm font-semibold">P</div>';                    }}                  />                </div>                <div>                  <h3 className="font-semibold">Chat with Pablo</h3>                  <p className="text-xs opacity-90">Your AI Travel Companion</p>                </div>              </div>            </div>
-
-            <div className="relative flex flex-col h-[calc(100%-200px)]">
-              <ScrollArea className="flex-1 p-4 h-[calc(100%-200px)] text-start">
-                <div className="space-y-1" id="scroll-area-viewport">
-                  {msgs.map((m, i) => (
-                    <TypeBubble
-                      key={i}
-                      msg={m}
-                      shouldType={i === msgs.length - 1 && isTypingMessage}
-                      onDone={i === msgs.length - 1 ? handleMessageTyped : () => { }}
-                      speed={playbackSpeed}
-                    />
-                  ))}
-                  {/* <AnimatePresence>{typing && <PabloTypingIndicator key="typing" />}</AnimatePresence> */}
-                  {/* <div ref={scrollRef} className="h-1" /> */}
+                <div className="flex items-baseline">
+                  <span className="text-2xl font-semibold tracking-tight text-gray-900">Pablo</span>
+                  <span className="text-lg text-gray-500 ml-1">Travel</span>
                 </div>
-              </ScrollArea>
+              </div>
             </div>
 
-            <div className="p-4 border-t bg-gray-50">
+            <div className="flex items-center gap-4">
+              {/* Add test button */}
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full"
-                onClick={reset}
+                onClick={testNotifications}
+                className="mr-2"
               >
-                Restart Demo
+                Test Notifications
               </Button>
+              <Badge variant="outline" className="text-sm">
+                {state.location === "new-york" ? "📍 New York" : "🌎 Featured Destinations"}
+              </Badge>
             </div>
-          </Card>
-        </aside>
-      </div>
+          </div>
+        </header>
 
-      {/* Demo Controls */}
-      <DemoControls
-        isPlaying={isPlaying}
-        onPlayPause={() => setIsPlaying(!isPlaying)}
-        progress={Math.max(0, currentMsgIndex - 1)}
-        onProgressChange={jumpToMessage}
-        speed={playbackSpeed}
-        onSpeedChange={(v) => setPlaybackSpeed(parseFloat(v))}
-        soundEnabled={soundEnabled}
-        onSoundToggle={() => setSoundEnabled(!soundEnabled)}
-        totalSteps={SCRIPT.length}
-      />
-    </motion.div>
-    <div className="grid grid-cols-1 md:grid-cols-1 bg-[#f7f4f1] font-serif text-[#333]">
+        <div className="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* LEFT COLUMN - Dynamic Content */}
+          <section className="lg:col-span-2 space-y-8">
+            {/* Hero Section */}
+            <div className="relative rounded-3xl overflow-hidden h-64 bg-[#7e6441]">
+              <div className="absolute inset-0 bg-black/20" />
+              <div className="relative h-full flex items-center justify-center text-white p-8 text-center">
+                <div>
+                  <h2 className="text-3xl font-light mb-2">
+                    {state.location === "new-york" ? "Exploring New York" : "Where will Pablo take you?"}
+                  </h2>
+                  <p className="text-lg opacity-90">
+                    {state.location === "new-york"
+                      ? "Perfect stays for the Kaushan family adventure"
+                      : "AI-powered travel planning that knows you"}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Properties Section */}
+            <AnimatePresence mode="wait">
+              {renderProperties()}
+            </AnimatePresence>
+
+            {/* Influencers Grid */}
+            <div className="mb-12">
+              <h2 className="text-2xl font-medium text-gray-900 mb-6">Local Experts</h2>
+              <div className="space-y-3">
+                {INFLUENCERS.map((influencer) => (
+                  <InfluencerCard key={influencer.id} influencer={influencer} />
+                ))}
+              </div>
+            </div>
+
+            {/* Articles Grid */}
+            <div>
+              <h2 className="text-2xl font-medium text-gray-900 mb-6">Travel Stories</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {ARTICLES.map((article) => (
+                  <ArticleCard key={article.id} article={article} />
+                ))}
+              </div>
+            </div>
+
+            {/* Itinerary Section */}
+            <>
+              {state.iti && (
+                <motion.section
+                  initial={{ opacity: 0, y: 0 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 0 }}
+                  className=" bg-white rounded-2xl p-8 shadow-lg"
+                >
+                  <h3 className="text-2xl font-semibold mb-6 text-gray-900">Day 1 – Arrival & Park Fun</h3>
+                  <div className="space-y-3">
+                    {[
+                      "Extra 20‑30 min for Friday traffic",
+                      "Drop bags with doorman (check‑in 3 pm)",
+                      "Lunch: Family Kitchen (GF pizza)",
+                      "Central Park scavenger hunt → zoo (red pandas!)",
+                      "Wholefoods Columbus Circle – stock fridge",
+                      "Dinner: Mo Lounge – park‑view cocktails",
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <div className="w-6 h-6 rounded-full  bg-[#f5f1ed] flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <span className="text-xs font-semibold text-[#7e6441]">{i + 1}</span>
+                        </div>
+                        <p className="text-gray-700">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </motion.section>
+              )}
+            </>
+
+            {/* Extra Activities */}
+            <>
+              {state.extras && (
+                <motion.section
+                  initial={{ opacity: 0, y: 0 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 0 }}
+                  className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-8 shadow-lg"
+                >
+                  <h3 className="text-2xl font-semibold mb-6 text-green-900">Special Experiences</h3>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <Card className="p-6 hover:shadow-md transition-shadow">
+                      <h4 className="font-semibold text-lg mb-2">Broadway Workshop</h4>
+                      <p className="text-gray-600 text-sm">Behind-the-scenes dance class for kids (90 min)</p>
+                    </Card>
+                    <Card className="p-6 hover:shadow-md transition-shadow">
+                      <h4 className="font-semibold text-lg mb-2">Lion King + Tech Exhibit</h4>
+                      <p className="text-gray-600 text-sm">Split the family for age-appropriate fun</p>
+                    </Card>
+                    <Card className="p-6 hover:shadow-md transition-shadow md:col-span-2">
+                      <h4 className="font-semibold text-lg mb-2">Italian Family Dinner</h4>
+                      <p className="text-gray-600 text-sm">Private room, GF pasta, kids make their own cannoli!</p>
+                    </Card>
+                  </div>
+                </motion.section>
+              )}
+            </>
+          </section>
+
+          {/* CHAT COLUMN */}
+          <aside className="lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
+            <Card className="h-full shadow-xl rounded-2xl overflow-hidden">
+              <div className="bg-[#7e6441] text-white p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full overflow-hidden bg-white/20">
+                    <img src="/images/pablo-logo.svg" alt="Pablo" className="w-full h-full object-contain p-1.5" onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center text-white text-sm font-semibold">P</div>'; }} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">Chat with Pablo</h3>
+                    <p className="text-xs opacity-90">Your AI Travel Companion</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative flex flex-col h-[calc(100%-200px)]">
+                <ScrollArea className="flex-1 p-4 h-[calc(100%-200px)] text-start">
+                  <div className="space-y-1" id="scroll-area-viewport">
+                    {msgs.map((m, i) => (
+                      <TypeBubble
+                        key={i}
+                        msg={m}
+                        shouldType={i === msgs.length - 1 && isTypingMessage}
+                        onDone={i === msgs.length - 1 ? handleMessageTyped : () => { }}
+                        speed={playbackSpeed}
+                      />
+                    ))}
+                    <AnimatePresence>{typing && <PabloTypingIndicator key="typing" />}</AnimatePresence>
+                    <div ref={scrollRef} className="h-1" />
+                  </div>
+                </ScrollArea>
+              </div>
+
+              <div className="p-4 border-t bg-gray-50">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                  onClick={reset}
+                >
+                  Restart Demo
+                </Button>
+              </div>
+            </Card>
+          </aside>
+        </div>
+
+        {/* Demo Controls */}
+        <DemoControls
+          isPlaying={isPlaying}
+          onPlayPause={() => setIsPlaying(!isPlaying)}
+          progress={Math.max(0, currentMsgIndex - 1)}
+          onProgressChange={jumpToMessage}
+          speed={playbackSpeed}
+          onSpeedChange={(v) => setPlaybackSpeed(parseFloat(v))}
+          soundEnabled={soundEnabled}
+          onSoundToggle={() => setSoundEnabled(!soundEnabled)}
+          totalSteps={SCRIPT.length}
+        />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-1 bg-[#f7f4f1] font-serif text-[#333]">
         {/* bottom div code */}
         <div className="p-6 space-y-6">
           <Tabs defaultValue="feed">
