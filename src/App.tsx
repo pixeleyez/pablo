@@ -6,6 +6,8 @@ import Canvas from './pages/Canvas'
 // import Canvas3 from './pages/canvas-3'
 import Canvas4 from './pages/Canvas-4'
 import Canvas5 from './pages/Canvas-5'
+import Canvas6 from './pages/Canvas-6'
+import Canvas7 from './pages/Canvas-7'
 import Oka from './pages/Oka'
 
 import './App.css'
@@ -22,6 +24,8 @@ function App() {
         <Route path="Canvas3" element={<Canvas3 />} /> */}
         <Route path="Canvas2" element={<Canvas4 />} />
         <Route path="Canvas3" element={<Canvas5 />} />
+        <Route path="Canvas6" element={<Canvas6 />} />
+        <Route path="Canvas7" element={<Canvas7 />} />
       </Routes>
     </Router>
   )
