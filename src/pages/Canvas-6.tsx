@@ -575,35 +575,35 @@ const TypeBubble = ({
   );
 };
 
-const PabloTypingIndicator = () => (
-  <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -10 }}
-    className="mb-6 flex items-start gap-3"
-  >
-    <div className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-3 shadow-sm">
-      <span className="text-[#666666]">Pablo is thinking</span>
-      <div className="flex gap-1">
-        <motion.div
-          animate={{ y: [0, -3, 0] }}
-          transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-          className="w-1.5 h-1.5 bg-[#666666] rounded-full"
-        />
-        <motion.div
-          animate={{ y: [0, -3, 0] }}
-          transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-          className="w-1.5 h-1.5 bg-[#666666] rounded-full"
-        />
-        <motion.div
-          animate={{ y: [0, -3, 0] }}
-          transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-          className="w-1.5 h-1.5 bg-[#666666] rounded-full"
-        />
-      </div>
-    </div>
-  </motion.div>
-);
+// const PabloTypingIndicator = () => (
+//   <motion.div
+//     initial={{ opacity: 0, y: 10 }}
+//     animate={{ opacity: 1, y: 0 }}
+//     exit={{ opacity: 0, y: -10 }}
+//     className="mb-6 flex items-start gap-3"
+//   >
+//     <div className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-3 shadow-sm">
+//       <span className="text-[#666666]">Pablo is thinking</span>
+//       <div className="flex gap-1">
+//         <motion.div
+//           animate={{ y: [0, -3, 0] }}
+//           transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+//           className="w-1.5 h-1.5 bg-[#666666] rounded-full"
+//         />
+//         <motion.div
+//           animate={{ y: [0, -3, 0] }}
+//           transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+//           className="w-1.5 h-1.5 bg-[#666666] rounded-full"
+//         />
+//         <motion.div
+//           animate={{ y: [0, -3, 0] }}
+//           transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+//           className="w-1.5 h-1.5 bg-[#666666] rounded-full"
+//         />
+//       </div>
+//     </div>
+//   </motion.div>
+// );
 
 // Update the ProcessingNotification for better visibility
 const ProcessingNotification = ({ show }: { show: boolean }) => (
