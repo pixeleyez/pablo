@@ -674,39 +674,67 @@ const PaymentNotification = ({ show }: { show: boolean }) => (
 /**************** SCRIPT ****************/
 const SCRIPT: { from: "pablo" | "user"; text: string; eff?: (s: DemoState) => DemoState }[] = [
   {
-    from: "pablo",
-    text: "Hey Marina! How are the kids - 2, 8, 11, 13, 14? Still under $750 budget? Found a perfect 4-bedroom in Midtown for $729/night with city views!",
-    eff: (s) => ({ ...s, current: "p1", location: "new-york" }),
-  },
-  { from: "user", text: "any food place (bakery etc) close by?" },
-  {
-    from: "pablo",
-    text: "Got you covered! Here's another option closer to Times Square - $825/night. A bit over budget but amazing location. Midtown is perfect for your family - thoughts?",
-    eff: (s) => ({ ...s, current: "p2" }),
-  },
-  { from: "user", text: "compare them" },
-  {
-    from: "pablo",
-    text: "First one: Bryant Park views, 7-min walk to restaurants. Second: no park view but cafes downstairs, Smoothie King in lobby. All kids fit comfortably in both!",
-    eff: (s) => ({ ...s, compare: true }),
-  },
-  { from: "user", text: "no flights yet, are dates flexible? Book 2nd option for now, need flexibility w/ dates/cancel; also, need activities w/kids" },
-  {
-    from: "pablo",
-    text: "Perfect! ",
-    eff: (s) => ({ ...s, iti: true }),
+    from: "user",
+    text: "Hi Pablo, first time here, need help w/travel plans"
   },
   {
     from: "pablo",
-    text: "Booked! Day 1: Check-in 4pm, visit Urban Bites for lunch, then Bryant Park carousel. I've made a treasure hunt for the kids! Dinner at Skyline Terrace with city views.",
-    eff: (s) => ({ ...s, iti: true }),
+    text: "Welcome! I'm Pablo, they classify me as Artificial Intelligence guy, but trust me, I'm your favorite companion. I think I'm human actually .. We'll soon become good friends, you'll love having me around 😊 What's your name?",
+    eff: (s) => ({ ...s, current: "p1" })
+  },
+  {
+    from: "user",
+    text: "Marina. I have 10 min , let's see what you can do for me – looking for a low budget tour somewhere in EU (prefer warm places), only been to Paris and London before. Limited budget, $5,000 would love 10 days if possible, depart first week of July (1 – 3rd) , possibly three of us"
   },
   {
     from: "pablo",
-    text: "Day 2: Morning bagel-making class for all kids (2 hours) OR Hamilton tickets for older ones + science museum for younger. Dinner: Mexican place with GF options, kids make churros! Should I book?",
-    eff: (s) => ({ ...s, extras: true }),
+    text: "Marinaaa, what a cool name, I'll have a surprise for you in a bit, but first, need more info; travelling alone? Dietary restrictions? Any other preferences? If you wish, you can register as a member then we become really close, and I'll be even more helpful as I'll know a lot about you and your lifestyle. Good friends know how to make each other happy 😊",
+    eff: (s) => ({ ...s, current: "p2" })
   },
-];
+  {
+    from: "user",
+    text: "I'm vegan, yoga enthusiasts, love hiking and biking – I'm 34"
+  },
+  {
+    from: "pablo",
+    text: "Transportation needs to be included in $5K?"
+  },
+  {
+    from: "user",
+    text: "Thnx for asking, no need for flights"
+  },
+  {
+    from: "pablo",
+    text: "Awesome, room to breathe .. let me do my magic.. And while I'm thinking…. here is a surprise for you ! https://youtu.be/mWksAbZQoO8?si=OkW1-XpG_faFE2uU",
+  },
+  {
+    from: "user",
+    text: "You are funny lol"
+  },
+  {
+    from: "pablo",
+    text: "Funny is my middle name 😉 … TADAAAAA",
+    eff: (s) => ({ ...s, location: "eu-tour" })
+  },
+  {
+    from: "user",
+    text: "Sounds great! Let me check flights and I'll get back to you"
+  },
+  {
+    from: "pablo",
+    text: "I told you, you'll be delighted ! Should I pre-emptively book the accommodations in Naples and Dubrovnik for now so that you don't lose them? They go fast, especially in Dubrovnik but these two offer free cancellation..",
+    eff: (s) => ({ ...s, booking: true })
+  },
+  {
+    from: "user",
+    text: "Sounds good, I'll register and you'll get a card in my profile"
+  },
+  {
+    from: "pablo",
+    text: "At your service Ma'am! Welcome to the community! Once you register, you can choose a community of your preference and join for further valuable tips and social – theme based events!",
+    eff: (s) => ({ ...s, registered: true, community: true })
+  }
+ ];
 
 /**************** MAIN COMPONENT ****************/
 export default function PabloDemoLoop() {
@@ -744,9 +772,9 @@ export default function PabloDemoLoop() {
   }, []);
 
   // Auto-scroll to bottom
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [msgs, typing]);
+  // useEffect(() => {
+  //   // scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // }, [msgs, typing]);
 
   // Play sound effect
   const playMessageSound = useCallback(() => {

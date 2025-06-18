@@ -345,8 +345,8 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentImage}
-                src={p.images[currentImage]}
-                alt={p.title}
+                src={p?.images ? p.images[currentImage] : ''}
+                alt={p?.title}
                 className="h-full w-full object-cover"
                 initial={{ opacity: 0, scale: 1.1 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -357,7 +357,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
 
             {/* Image navigation */}
             <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1.5">
-              {p.images.map((_, i) => (
+              {p?.images.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrentImage(i)}
@@ -390,7 +390,7 @@ const PropertyCard = ({ p, isLoading }: { p: Property; isLoading?: boolean }) =>
             <div className="absolute top-3 left-3">
               <Badge className="bg-white/90 backdrop-blur text-gray-800 shadow-lg">
                 <MapPin className="w-3 h-3 mr-1" />
-                {p.location}
+                {p?.location}
               </Badge>
             </div>
           </div>
@@ -677,38 +677,80 @@ const PaymentNotification = ({ show }: { show: boolean }) => (
 const SCRIPT: { from: "pablo" | "user"; text: string; eff?: (s: DemoState) => DemoState }[] = [
   {
     from: "pablo",
-    text: "Hey Marina! How are the kids - 2, 8, 11, 13, 14? Still under $750 budget? Found a perfect 4-bedroom in Midtown for $729/night with city views!",
-    eff: (s) => ({ ...s, current: "p1", location: "new-york" }),
+    text: "Hey Super Dad! I've been thinking about your crew, how are my favorite munchkins doing? They are now 1, 7, 10, 12, 13 if I remember correctly? I see you are looking at NYC? How fun, who's going?",
+    eff: (s) => ({ ...s, current: "p1", location: "nyc" })
   },
-  { from: "user", text: "any food place (bakery etc) close by?" },
   {
-    from: "pablo",
-    text: "Got you covered! Here's another option closer to Times Square - $825/night. A bit over budget but amazing location. Midtown is perfect for your family - thoughts?",
-    eff: (s) => ({ ...s, current: "p2" }),
-  },
-  { from: "user", text: "compare them" },
-  {
-    from: "pablo",
-    text: "First one: Bryant Park views, 7-min walk to restaurants. Second: no park view but cafes downstairs, Smoothie King in lobby. All kids fit comfortably in both!",
-    eff: (s) => ({ ...s, compare: true }),
-  },
-  { from: "user", text: "no flights yet, are dates flexible? Book 2nd option for now, need flexibility w/ dates/cancel; also, need activities w/kids" },
-  {
-    from: "pablo",
-    text: "Perfect! ",
-    eff: (s) => ({ ...s, iti: true }),
+    from: "user",
+    text: "Hey, you are funny – correct on ages – the whole family, looking at first week of July, 3rd is good for departure, return Sat / Sun 12 or 13th"
   },
   {
     from: "pablo",
-    text: "Booked! Day 1: Check-in 4pm, visit Urban Bites for lunch, then Bryant Park carousel. I've made a treasure hunt for the kids! Dinner at Skyline Terrace with city views.",
-    eff: (s) => ({ ...s, iti: true }),
+    text: "Gotcha, remember how smoothly we handled Disney last Summer? NYC will be a breeze! Budget still < $800?",
+    eff: (s) => ({ ...s, current: "p2" })
+  },
+  {
+    from: "user",
+    text: "Under $800 / day"
   },
   {
     from: "pablo",
-    text: "Day 2: Morning bagel-making class for all kids (2 hours) OR Hamilton tickets for older ones + science museum for younger. Dinner: Mexican place with GF options, kids make churros! Should I book?",
-    eff: (s) => ({ ...s, extras: true }),
+    text: "Check out this 4BDR UWS apt - $789/night – has gaming corner your big boys loved in Palm Beach resort + beautiful view from the master bedroom (Remember last Summer the balcony over Seine?) – check the video",
+    eff: (s) => ({ ...s, location: "uws" })
   },
-];
+  {
+    from: "user",
+    text: "cafe/bakery close by?"
+  },
+  {
+    from: "pablo",
+    text: "Yes, in the same block- BreadClub, super popular (breakfast / lunch food, prepared salad, sandwiches, GF even)"
+  },
+  {
+    from: "pablo",
+    text: "Check this one, THE PERFECT place for you, 4 min walk to Breadclub - gorgeous apartment closer to Broadway, also on the UWS that honestly feels like it was made for the Kaushan family! Just a bit over the budget $870, too steep? Afraid it's the season for big Apple, will need to move downtown for more availability but a bit more Downtown vibe, thoughts?",
+  },
+  {
+    from: "user",
+    text: "compare"
+  },
+  {
+    from: "pablo",
+    text: "First one gives you the view of Central Park but food places are a bit of a walk (5 min); the other one no view of the park but coffee/bakeries super close; downtown overall is more hip / less family vibe and if you want 5th ave shopping/theatre/central park stuff you'll have to allot travelling time everyday + dealing with Subway (no fun)",
+    eff: (s) => ({ ...s, compare: true })
+  },
+  {
+    from: "user",
+    text: "Prefer Uptown"
+  },
+  {
+    from: "pablo",
+    text: "Yep, that's what I thought .. Olga still loves her morning green juice? Get this – not only full kitchen with a cold press juicer, but also a Juice Press store downstairs! Great bakery next door, and 5 min walk to a few amazing restaurants (Daniel Bouloud etc) All boys can fit in one room with bunk beds, Gracie on her own like a proper princess and a crib for Sophie in your bedroom per request!",
+  },
+  {
+    from: "user",
+    text: "Don't have flights yet, are dates flexible / any restrictions?"
+  },
+  {
+    from: "pablo",
+    text: "Gotcha.. my bet is on the 2nd option, you got free cancellation, then we fix the dates later, what do you think?",
+    eff: (s) => ({ ...s, booking: true })
+  },
+  {
+    from: "user",
+    text: "yes go ahead"
+  },
+  {
+    from: "pablo",
+    text: "Booking = done! Used card on file 😉 Give me a few min to amaze you now with itinerary (optionally, Pablo sends an email)",
+    eff: (s) => ({ ...s, booked: true, })
+  },
+  {
+    from: "pablo",
+    text: "What do you say Super Dad? Shall I go ahead and make reservations for these restaurants? Once I get your approval, I'll email you the final version of itinerary and summary of receipts.",
+    eff: (s) => ({ ...s, iti: true, restaurants: true })
+  }
+ ];
 
 /**************** MAIN COMPONENT ****************/
 export default function PabloDemoLoop() {
@@ -746,9 +788,9 @@ export default function PabloDemoLoop() {
   }, []);
 
   // Auto-scroll to bottom
-  useEffect(() => {
-    // scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [msgs, typing]);
+  // useEffect(() => {
+  //   // scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // }, [msgs, typing]);
 
   // Play sound effect
   const playMessageSound = useCallback(() => {
