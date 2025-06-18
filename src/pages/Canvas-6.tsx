@@ -511,8 +511,8 @@ const TypeBubble = ({
   speed?: number;
 }) => {
   const [txt, setTxt] = useState("");
-  const [isHighlighted, setIsHighlighted] = useState(false);
-  const bubbleRef = useRef<HTMLDivElement>(null);
+  const [isHighlighted] = useState(false);
+  // const bubbleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!shouldType) {
