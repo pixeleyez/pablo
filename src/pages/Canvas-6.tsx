@@ -549,7 +549,7 @@ const TypeBubble = ({
 
   return (
     <motion.div
-      ref={bubbleRef}
+      // ref={bubbleRef}
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       className={`mb-6 flex items-end gap-3 ${msg.from === "pablo" ? "" : "flex-row-reverse"}`}
@@ -1126,8 +1126,8 @@ export default function PabloDemoLoop() {
                       speed={playbackSpeed}
                     />
                   ))}
-                  <AnimatePresence>{typing && <PabloTypingIndicator key="typing" />}</AnimatePresence>
-                  <div ref={scrollRef} className="h-1" />
+                  {/* <AnimatePresence>{typing && <PabloTypingIndicator key="typing" />}</AnimatePresence> */}
+                  {/* <div ref={scrollRef} className="h-1" /> */}
                 </div>
               </ScrollArea>
             </div>
